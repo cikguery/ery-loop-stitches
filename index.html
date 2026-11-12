@@ -60,6 +60,13 @@ footer.studio-footer{position:fixed!important;left:0;right:0;bottom:0;z-index:40
 footer.studio-footer .ownership,footer.studio-footer .terms{display:block!important;font-size:12px!important;line-height:1.35!important;margin:0 auto!important;letter-spacing:normal!important}
 footer.studio-footer .terms{max-width:1000px;margin-top:3px!important}
 @media(max-width:700px){body{padding-bottom:110px!important}footer.studio-footer{padding:7px 10px!important}}
+</style><style id="v25-footer-fix">
+/* Footer follows content rather than covering controls or text. */
+footer.studio-footer{position:static!important;left:auto!important;right:auto!important;bottom:auto!important;z-index:auto!important;box-shadow:none!important;margin:12px 0 0!important;padding:12px 18px 16px!important;min-height:0!important}
+body{padding-bottom:0!important}
+.layout{min-height:0!important}
+footer.studio-footer .ownership,footer.studio-footer .terms{font-size:12px!important;line-height:1.5!important;white-space:normal!important;overflow:visible!important}
+@media(max-width:700px){body{padding-bottom:0!important}}
 </style></head><body>
 <header><div><h1><span class="brand-mark" aria-hidden="true">◎</span> Ery Loop <em>&</em> Stitches! <small>STUDIO</small></h1><div class="subtitle">Create, save, reopen & export crochet diagrams · Free online editor</div></div><div class="actions"><input id="projectName" type="text" value="Untitled pattern" aria-label="Project name"><button id="newBtn">New</button><button id="openBtn">Open project</button><button id="saveBtn" class="primary">Save project</button><input id="fileInput" type="file" accept=".crochet,.json,application/json" hidden></div></header>
 <div class="layout"><aside class="palette-panel"><h2>Stitch palette <span class="count">20</span></h2><div class="symbol-grid" id="symbols"></div><div class="help-actions"><button type="button" id="howToBtn">ⓘ How to use the studio</button><button type="button" id="shortcutsBtn">⌨ Keyboard shortcuts</button></div></aside>
