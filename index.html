@@ -94,12 +94,18 @@ body{padding-bottom:96px!important}
 #touchMenu .danger{color:#a42e31}
 #touchHint{font-size:11px;line-height:1.4}
 @media(pointer:coarse){#touchHint{display:block}}
+</style><style id="v45-transform-handles">
+#transformOverlay .transform-box{fill:none;stroke:#2673d9;stroke-width:1.5;stroke-dasharray:6 4;pointer-events:none}
+#transformOverlay .transform-handle{fill:white;stroke:#2673d9;stroke-width:2;cursor:nwse-resize;pointer-events:all}
+#transformOverlay .rotate-handle{fill:#2673d9;stroke:white;stroke-width:2;cursor:grab;pointer-events:all}
+#transformOverlay .rotate-stem{stroke:#2673d9;stroke-width:1.5;pointer-events:none}
+#transformOverlay .handle-icon{fill:white;stroke:none;pointer-events:none}
 </style></head><body>
 <header><div><h1><span class="brand-mark" aria-hidden="true">◎</span> Ery Loop <em>&</em> Stitches! <small>STUDIO</small></h1><div class="subtitle">Create, save, reopen & export crochet diagrams · Free online editor</div></div><div class="actions"><input id="projectName" type="text" value="Untitled pattern" aria-label="Project name"><button id="newBtn">New</button><button id="openBtn">Open project</button><button id="saveBtn" class="primary">Save project</button><input id="fileInput" type="file" accept=".crochet,.json,application/json" hidden></div></header>
 <div class="layout"><aside class="palette-panel"><h2>Stitch palette <span class="count">24</span></h2><div class="help-actions"><button type="button" id="howToBtn">ⓘ How to use the studio</button><button type="button" id="shortcutsBtn">⌨ Keyboard shortcuts</button></div><div class="symbol-grid" id="symbols"></div></aside>
 <main class="workspace"><div class="tools"><button id="clearBtn" type="button">Clear all stitches</button><button id="rowGuide" type="button" aria-pressed="false">Row guides</button><button id="circleGuide" type="button" aria-pressed="false">Circular guides</button><button id="handBtn" title="Pan the infinite canvas">✋ Hand</button><button id="undoBtn" title="Undo">↶ Undo</button><button id="redoBtn" title="Redo">↷ Redo</button><button id="duplicateBtn">Duplicate</button><button id="deleteBtn">Delete</button><span style="flex:1"></span><label style="margin:0">Zoom <select id="zoom"><option value="0.5">50%</option><option value="0.75">75%</option><option value="1" selected>100%</option><option value="1.25">125%</option><option value="1.5">150%</option></select></label></div><div class="studio-info" aria-label="Project information"><span>Project: <strong id="infoProject">Untitled pattern</strong></span><span>Stitches: <strong id="infoStitches">0</strong></span><span>Selected: <strong id="infoSelected">0</strong></span><span>Zoom: <strong id="infoZoom">100%</strong></span></div><div class="canvas-wrap" id="canvasWrap"><svg id="canvas" preserveAspectRatio="none" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" aria-label="Editable crochet diagram"><g id="guides" pointer-events="none"></g><g id="stitches"></g></svg></div><div class="small">Hand tool: drag to pan the infinite board · Mouse wheel or Zoom selector: zoom in/out · Select tool: drag stitches or box-select · Guides are not exported.</div><div class="small" id="status" role="status">Ready. Choose a symbol to begin.</div></main>
 <aside class="properties-panel"><h2>Canvas guides</h2><label><input type="checkbox" id="gridToggle" checked> Square grid</label><label><input type="checkbox" id="snapToggle"> Snap to grid</label><label><input type="checkbox" id="rowToggle"> Horizontal rows</label><label><input type="checkbox" id="circleToggle"> Concentric circles</label><label>Grid spacing <input id="spacing" type="number" min="10" max="100" value="25"> px</label><div class="section"><h2>Stitch properties</h2><div id="selectionInfo" class="small">No stitch selected</div><label>Rotation <input type="range" id="rotation" min="-180" max="180" value="0" disabled></label><label>Size <output id="sizeValue">36 px</output> <input type="range" id="size" min="12" max="100" value="36" disabled></label><label>Color <span class="swatches" id="colorSwatches"><button type="button" class="swatch" data-color="#111111" title="Black" aria-label="Black stitch color"></button><button type="button" class="swatch" data-color="#2563eb" title="Blue" aria-label="Blue stitch color"></button><button type="button" class="swatch" data-color="#dc2626" title="Red" aria-label="Red stitch color"></button></span></label></div><div class="section"><h2>Pattern designer</h2><label for="designerName">Designed by</label><input id="designerName" type="text" placeholder="Your name" maxlength="80" style="max-width:100%;width:100%"><p class="note">Included in PNG and SVG exports.</p></div><div class="section"><h2>Share your pattern</h2><div class="tools"><button id="svgBtn">Export SVG</button><button id="pngBtn">Export PNG</button></div><p class="note">SVG is ideal for scalable, print-quality charts. PNG exports a high-resolution image. Project files preserve editable stitches and guidelines.</p></div></aside></div>
-<div id="touchMenu" role="menu" aria-label="Stitch actions"><button type="button" id="touchCopy">Copy</button><button type="button" id="touchDelete" class="danger">Delete</button><button type="button" id="touchDismiss">Cancel</button></div><dialog id="howToDialog" class="studio-dialog"><div class="dialog-head"><h2>How to use the studio</h2><button type="button" class="dialog-close" aria-label="Close">✕</button></div><p>Choose a stitch from the palette, then double-click the canvas to place it. Double-click a palette symbol to place one in the visible board's centre.</p><p>Choose Select to drag individual stitches or drag across empty space to box-select several. Drag a selected stitch to move the selection together. Duplicate to repeat stitches with the same properties.</p><p>Use the Hand tool to pan the whiteboard. To zoom, use the Zoom selector on phones and tablets, or the mouse wheel on a computer. Two-finger board zoom is disabled on touchscreens so it does not interfere with stitch rotation and resizing. On touchscreens, drag on empty board space to box-select multiple stitches. Drag a selected group to move it together. Use two fingers on a stitch to resize and rotate it, or two fingers on selected stitches to transform the group. Hold a stitch for about one second to open Copy/Delete. Copy, then tap empty board once to paste; selecting a new palette stitch cancels paste mode. Row and Circular guides are optional alignment aids and are not included in exports.</p><p>Save project downloads an editable file that you can open later. Export PNG or SVG for a finished diagram.</p></dialog>
+<div id="touchMenu" role="menu" aria-label="Stitch actions"><button type="button" id="touchCopy">Copy</button><button type="button" id="touchDelete" class="danger">Delete</button><button type="button" id="touchDismiss">Cancel</button></div><dialog id="howToDialog" class="studio-dialog"><div class="dialog-head"><h2>How to use the studio</h2><button type="button" class="dialog-close" aria-label="Close">✕</button></div><p>Choose a stitch from the palette, then double-click the canvas to place it. Double-click a palette symbol to place one in the visible board's centre.</p><p>Choose Select to drag individual stitches or drag across empty space to box-select several. Drag a selected stitch to move the selection together. Duplicate to repeat stitches with the same properties.</p><p>Use the Hand tool to pan the whiteboard. To zoom, use the Zoom selector on phones and tablets, or the mouse wheel on a computer. Two-finger board zoom is disabled on touchscreens so it does not interfere with stitch rotation and resizing. On touchscreens, drag on empty board space to box-select multiple stitches. Drag a selected group to move it together. Tap a stitch to show its dashed selection box. Drag a corner handle to resize, or drag the small circular ↻ button above the box to rotate. The handles also work for multiple selected stitches. Two-finger stitch gestures remain available. Hold a stitch for about one second to open Copy/Delete. Copy, then tap empty board once to paste; selecting a new palette stitch cancels paste mode. Row and Circular guides are optional alignment aids and are not included in exports.</p><p>Save project downloads an editable file that you can open later. Export PNG or SVG for a finished diagram.</p></dialog>
 <dialog id="shortcutsDialog" class="studio-dialog"><div class="dialog-head"><h2>Keyboard shortcuts</h2><button type="button" class="dialog-close" aria-label="Close">✕</button></div><div class="shortcut-list"><span>Delete</span><span>Remove selected stitches</span><span>Ctrl/Cmd + Z</span><span>Undo</span><span>Ctrl/Cmd + Y</span><span>Redo</span><span>Ctrl/Cmd + D</span><span>Duplicate</span><span>Ctrl/Cmd + C / V</span><span>Copy / paste</span><span>Shift + click</span><span>Multi-select</span><span>Left-drag empty space</span><span>Box selection</span><span>Right-click stitch</span><span>Delete</span><span>Space + drag</span><span>Pan whiteboard</span><span>Mouse wheel (computer) / Zoom selector (all devices)</span><span>Zoom; two-finger board zoom is disabled</span><span>Arrow keys</span><span>Nudge selection</span><span>Escape</span><span>Pointer tool / close help</span></div></dialog>
 <footer class="studio-footer" role="contentinfo"><span class="ownership">© 2026 Ery Yusof · Ery Loop &amp; Stitches! Studio</span><span class="terms">An independent crochet diagram maker created by Ery and shared free for personal, non-commercial use. Under the studio’s stated terms, patterns created using this tool may not be sold commercially. Please respect these terms when using the studio.</span></footer>
 <script>
@@ -115,15 +121,89 @@ let boardW=1200,boardH=900,spaceDown=false,pan=null,handMode=false,camX=0,camY=0
 function el(tag,attrs={},parent){const e=document.createElementNS(NS,tag);for(const [k,v]of Object.entries(attrs))e.setAttribute(k,v);if(parent)parent.appendChild(e);return e}function art(type){return defs.find(d=>d[0]===type)?.[2]||''}function iconSVG(type){return `<svg viewBox="-28 -28 56 56"><g fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round">${art(type)}</g></svg>`}let currentGroup='';for(const [id,name]of defs){const group=symbolGroups[id];if(group!==currentGroup){currentGroup=group;const h=document.createElement('div');h.className='palette-group-title';h.textContent=group;$('symbols').appendChild(h)}const b=document.createElement('button');b.className='symbol'+(id==='pointer'?' active':'');b.dataset.tool=id;b.title=name;b.setAttribute('aria-label',name);b.innerHTML=id==='pointer'?'<strong style="font-size:25px">↖</strong><span>Select</span>':iconSVG(id)+`<span>${symbolAbbr[id]||name}</span>`;b.onclick=()=>setTool(id);b.ondblclick=e=>{if(e.sourceCapabilities?.firesTouchEvents)return;if(id!=='pointer')addStitch(id,camX+visibleSize().w/2,camY+visibleSize().h/2)};$('symbols').appendChild(b)}function setTool(t){touchPasteArmed=false;hideTouchMenu();tool=t;document.querySelectorAll('.symbol').forEach(b=>b.classList.toggle('active',b.dataset.tool===t));$('status').textContent=t==='pointer'?'Pointer tool: drag stitches to reposition.':`Double-click canvas to place ${defs.find(d=>d[0]===t)?.[1]}.`}
 function applySettings(s){for(const [key,id]of [['grid','gridToggle'],['snap','snapToggle'],['rows','rowToggle'],['circles','circleToggle']])$(id).checked=!!s[key];$('spacing').value=s.spacing||25}function drawGuides(){guides.replaceChildren();const s=settings(),step=Math.max(10,s.spacing),{w,h}=visibleSize(),left=camX-100,top=camY-100,right=camX+w+100,bottom=camY+h+100;if(s.grid){const pattern=el('pattern',{id:'boardGrid',width:step,height:step,patternUnits:'userSpaceOnUse'},el('defs',{},guides));el('path',{d:`M ${step} 0 L 0 0 0 ${step}`,fill:'none',stroke:'#e0e9df','stroke-width':.8},pattern);el('rect',{x:left,y:top,width:right-left,height:bottom-top,fill:'url(#boardGrid)'},guides)}if(s.rows){const interval=step*2;for(let y=Math.floor(top/interval)*interval;y<=bottom;y+=interval)el('line',{x1:left,y1:y,x2:right,y2:y,stroke:'#4d9b80','stroke-width':1.3,'stroke-dasharray':'8 6',opacity:.85},guides)}if(s.circles){el('line',{x1:400,y1:top,x2:400,y2:bottom,stroke:'#9bc4b4','stroke-dasharray':'5 5'},guides);el('line',{x1:left,y1:300,x2:right,y2:300,stroke:'#9bc4b4','stroke-dasharray':'5 5'},guides);const maxR=Math.hypot(Math.max(Math.abs(left-400),Math.abs(right-400)),Math.max(Math.abs(top-300),Math.abs(bottom-300)));for(let r=step*2;r<maxR;r+=step*2)el('circle',{cx:400,cy:300,r,fill:'none',stroke:'#83b0a0','stroke-width':1,'stroke-dasharray':'7 5'},guides)}}
 
-function render(){updateInfo();drawGuides();layer.replaceChildren();for(const it of items){const g=el('g',{class:'stitch'+(selection.has(it.id)?' selected':''),transform:`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36})`,'data-id':it.id},layer);const symbol=el('g',{fill:'none',stroke:it.color||'#233e3a','stroke-width':2.8,'stroke-linecap':'round','stroke-linejoin':'round'},g);symbol.innerHTML=art(it.type);el('rect',{x:-25,y:-28,width:50,height:56,class:'selection'},g);el('rect',{x:-26,y:-29,width:52,height:58,fill:'transparent',stroke:'none'},g)}const it=selection.size===1?items.find(i=>i.id===selected):null;$('selectionInfo').textContent=selection.size>1?selection.size+' stitches selected':it?(defs.find(d=>d[0]===it.type)?.[1]||'Unknown stitch')+' · Stitch #'+it.id:'No stitch selected';for(const id of ['rotation','size'])$(id).disabled=!it;if(it){$('rotation').value=it.rotation;$('size').value=it.size;document.querySelectorAll('.swatch').forEach(b=>b.classList.toggle('active',b.dataset.color===it.color))}document.querySelectorAll('.swatch').forEach(b=>{b.disabled=!selection.size;b.classList.toggle('active',selection.size===1&&it&&b.dataset.color===it.color)});$('sizeValue').textContent=it?it.size+' px':selection.size>1?'Multiple':'—';buttons()}
+function render(){updateInfo();drawGuides();layer.replaceChildren();for(const it of items){const g=el('g',{class:'stitch'+(selection.has(it.id)?' selected':''),transform:`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36})`,'data-id':it.id},layer);const symbol=el('g',{fill:'none',stroke:it.color||'#233e3a','stroke-width':2.8,'stroke-linecap':'round','stroke-linejoin':'round'},g);symbol.innerHTML=art(it.type);el('rect',{x:-25,y:-28,width:50,height:56,class:'selection'},g);el('rect',{x:-26,y:-29,width:52,height:58,fill:'transparent',stroke:'none'},g)}const it=selection.size===1?items.find(i=>i.id===selected):null;$('selectionInfo').textContent=selection.size>1?selection.size+' stitches selected':it?(defs.find(d=>d[0]===it.type)?.[1]||'Unknown stitch')+' · Stitch #'+it.id:'No stitch selected';for(const id of ['rotation','size'])$(id).disabled=!it;if(it){$('rotation').value=it.rotation;$('size').value=it.size;document.querySelectorAll('.swatch').forEach(b=>b.classList.toggle('active',b.dataset.color===it.color))}document.querySelectorAll('.swatch').forEach(b=>{b.disabled=!selection.size;b.classList.toggle('active',selection.size===1&&it&&b.dataset.color===it.color)});$('sizeValue').textContent=it?it.size+' px':selection.size>1?'Multiple':'—';buttons();drawTransformOverlay()}
 function updateInfo(){$('infoProject').textContent=$('projectName').value.trim()||'Untitled pattern';$('infoStitches').textContent=items.length;$('infoSelected').textContent=selection.size;$('infoZoom').textContent=Math.round(zoomLevel*100)+'%'}$('projectName').addEventListener('input',updateInfo);function coords(e){const p=canvas.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(canvas.getScreenCTM().inverse())}function snap(n){const s=settings();return s.snap?Math.round(n/s.spacing)*s.spacing:n}function addStitch(type,x,y){checkpoint();const it={id:nextId++,type,x:snap(x),y:snap(y),rotation:0,size:36,color:'#233e3a'};items.push(it);expandBoard(it.x,it.y);selection=new Set([it.id]);selected=it.id;render()}
 canvas.addEventListener('dblclick',e=>{if(handMode||tool==='pointer'||e.target.closest('.stitch'))return;const p=coords(e);addStitch(tool,p.x,p.y)});
 // Marquee selection is drawn in a separate overlay, never rebuilt during pointer movement.
+const transformOverlay=el('g',{id:'transformOverlay'},canvas);
 const marquee=el('rect',{fill:'#76529b', 'fill-opacity':'.10',stroke:'#76529b','stroke-width':1.5,'stroke-dasharray':'5 4',visibility:'hidden','pointer-events':'none'},canvas);
 function updateMarquee(a,b){marquee.setAttribute('x',Math.min(a.x,b.x));marquee.setAttribute('y',Math.min(a.y,b.y));marquee.setAttribute('width',Math.abs(a.x-b.x));marquee.setAttribute('height',Math.abs(a.y-b.y));marquee.setAttribute('visibility','visible')}
 function endDrag(){if(!drag)return;if(drag.kind==='box'){marquee.setAttribute('visibility','hidden');const a=drag.start,b=drag.end||a;const left=Math.min(a.x,b.x),right=Math.max(a.x,b.x),top=Math.min(a.y,b.y),bottom=Math.max(a.y,b.y);if(Math.hypot(a.x-b.x,a.y-b.y)>4){const found=items.filter(it=>it.x>=left&&it.x<=right&&it.y>=top&&it.y<=bottom).map(it=>it.id);selection=drag.additive?new Set([...drag.previous,...found]):new Set(found)}else if(!drag.additive)selection.clear();selected=selection.size===1?[...selection][0]:null}drag=null;render()}
 // Pointer handling uses geometry, not event targets: pointer capture and SVG redraws
 // otherwise change the target mid-gesture on some Android browsers.
+// Canva-style selection handles: dashed bounding box, resize corners and a rotation knob.
+let activeHandle=null;
+function transformBounds(){
+ const chosen=items.filter(i=>selection.has(i.id));if(!chosen.length)return null;
+ const minX=Math.min(...chosen.map(i=>i.x-30*i.size/36));
+ const minY=Math.min(...chosen.map(i=>i.y-32*i.size/36));
+ const maxX=Math.max(...chosen.map(i=>i.x+30*i.size/36));
+ const maxY=Math.max(...chosen.map(i=>i.y+32*i.size/36));
+ return {x:minX,y:minY,w:maxX-minX,h:maxY-minY,cx:(minX+maxX)/2,cy:(minY+maxY)/2};
+}
+function drawTransformOverlay(){
+ transformOverlay.replaceChildren();
+ const b=transformBounds();if(!b)return;
+ const r=7/zoomLevel,stem=31/zoomLevel;
+ el('rect',{x:b.x,y:b.y,width:b.w,height:b.h,class:'transform-box'},transformOverlay);
+ for(const [corner,x,y] of [['nw',b.x,b.y],['ne',b.x+b.w,b.y],['sw',b.x,b.y+b.h],['se',b.x+b.w,b.y+b.h]]){
+  el('circle',{cx:x,cy:y,r,class:'transform-handle','data-handle':'resize','data-corner':corner},transformOverlay);
+ }
+ el('line',{x1:b.cx,y1:b.y,x2:b.cx,y2:b.y-stem,class:'rotate-stem'},transformOverlay);
+ el('circle',{cx:b.cx,cy:b.y-stem,r:11/zoomLevel,class:'rotate-handle','data-handle':'rotate'},transformOverlay);
+ const t=el('text',{x:b.cx,y:b.y-stem+4/zoomLevel,'text-anchor':'middle','font-size':13/zoomLevel,'font-weight':'bold',fill:'white','pointer-events':'none'},transformOverlay);t.textContent='↻';
+}
+function beginHandle(e){
+ const h=e.target.closest?.('[data-handle]');if(!h||handMode||spaceDown)return;
+ e.preventDefault();e.stopImmediatePropagation();cancelLongPress();
+ const b=transformBounds();if(!b)return;
+ const p=coords(e),corner=h.dataset.corner||'';
+ const anchor={x:corner.includes('w')?b.x+b.w:b.x,y:corner.includes('n')?b.y+b.h:b.y};
+ const startDist=Math.max(1,Math.hypot(p.x-anchor.x,p.y-anchor.y));
+ const original=items.filter(i=>selection.has(i.id)).map(i=>({id:i.id,x:i.x,y:i.y,size:i.size,rotation:i.rotation}));
+ activeHandle={id:e.pointerId,mode:h.dataset.handle,corner,b,anchor,startDist,
+  angle:Math.atan2(p.y-b.cy,p.x-b.cx),original,saved:false};
+ try{canvas.setPointerCapture(e.pointerId)}catch(_){}
+}
+function moveHandle(e){
+ const g=activeHandle;if(!g||g.id!==e.pointerId)return;
+ e.preventDefault();e.stopImmediatePropagation();
+ const p=coords(e);
+ let factor=1,angle=0;
+ if(g.mode==='resize'){
+  const vx=(g.corner.includes('w')?-1:1)*(p.x-g.anchor.x);
+  const vy=(g.corner.includes('n')?-1:1)*(p.y-g.anchor.y);
+  factor=Math.max(.1,Math.min(8,(vx*g.b.w+vy*g.b.h)/(g.b.w*g.b.w+g.b.h*g.b.h)));
+ }else{
+  angle=(Math.atan2(p.y-g.b.cy,p.x-g.b.cx)-g.angle)*180/Math.PI;
+  angle=((angle+540)%360)-180;
+ }
+ if(!g.saved){checkpoint();g.saved=true}
+ for(const orig of g.original){
+  const it=items.find(i=>i.id===orig.id);if(!it)continue;
+  if(g.mode==='resize'){
+   it.x=g.anchor.x+(orig.x-g.anchor.x)*factor;
+   it.y=g.anchor.y+(orig.y-g.anchor.y)*factor;
+   it.size=Math.max(8,Math.min(180,Math.round(orig.size*factor)));
+  }else{
+   const rad=angle*Math.PI/180,dx=orig.x-g.b.cx,dy=orig.y-g.b.cy;
+   it.x=g.b.cx+dx*Math.cos(rad)-dy*Math.sin(rad);
+   it.y=g.b.cy+dx*Math.sin(rad)+dy*Math.cos(rad);
+   it.rotation=((Math.round(orig.rotation+angle)%360)+360)%360;
+  }
+  const node=layer.querySelector('[data-id="'+it.id+'"]');
+  if(node)node.setAttribute('transform',`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36})`);
+ }
+ drawTransformOverlay();
+}
+function endHandle(e){
+ if(!activeHandle||activeHandle.id!==e.pointerId)return;
+ e.preventDefault();e.stopImmediatePropagation();activeHandle=null;render();
+}
+canvas.addEventListener('pointerdown',beginHandle,true);
+canvas.addEventListener('pointermove',moveHandle,true);
+canvas.addEventListener('pointerup',endHandle,true);
+canvas.addEventListener('pointercancel',endHandle,true);
 function hitStitch(p){for(let i=items.length-1;i>=0;i--){const it=items[i],rad=30*it.size/36;const ang=-it.rotation*Math.PI/180,dx=p.x-it.x,dy=p.y-it.y;const xx=dx*Math.cos(ang)-dy*Math.sin(ang),yy=dx*Math.sin(ang)+dy*Math.cos(ang);if(Math.abs(xx)<=rad&&Math.abs(yy)<=rad*1.13)return it}return null}
 let frame=0;
 
