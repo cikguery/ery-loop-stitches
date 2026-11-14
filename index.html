@@ -88,17 +88,12 @@ body{padding-bottom:96px!important}
 .workspace > .tools > label{display:inline-flex!important;align-items:center!important;gap:5px!important;font-size:11px!important;white-space:nowrap!important;margin:0!important}
 .workspace > .tools #zoom{height:32px!important;min-height:32px!important;font-size:11px!important;padding:3px 5px!important}
 @media(max-width:900px){.workspace > .tools{gap:4px!important}.workspace > .tools > button{padding:5px 6px!important;font-size:10px!important}}
-</style><style id="v36-transform-ui">
-#canvas{touch-action:none}#transformUI .transform-frame{fill:none;stroke:#2474c7;stroke-width:1.6;stroke-dasharray:5 4;pointer-events:none}
-#transformUI .resize-knob{fill:#fff;stroke:#2474c7;stroke-width:2;cursor:nwse-resize;pointer-events:all}
-#transformUI .rotate-knob{fill:#2474c7;stroke:white;stroke-width:2;cursor:grab;pointer-events:all}
-#transformUI .rotate-line{stroke:#2474c7;stroke-width:1.5;pointer-events:none}
-</style></head><body>
+</style><style id="touch-controls-v36">#transformControls .outline{fill:none;stroke:#2674ce;stroke-width:1.5;stroke-dasharray:5 4;pointer-events:none}#transformControls .control{fill:#fff;stroke:#2674ce;stroke-width:2;pointer-events:all;cursor:grab}#transformControls .round-control{fill:#2674ce;stroke:white;stroke-width:2;pointer-events:all;cursor:grab}#transformControls .stem{stroke:#2674ce;stroke-width:1.5;pointer-events:none}</style></head><body>
 <header><div><h1><span class="brand-mark" aria-hidden="true">◎</span> Ery Loop <em>&</em> Stitches! <small>STUDIO</small></h1><div class="subtitle">Create, save, reopen & export crochet diagrams · Free online editor</div></div><div class="actions"><input id="projectName" type="text" value="Untitled pattern" aria-label="Project name"><button id="newBtn">New</button><button id="openBtn">Open project</button><button id="saveBtn" class="primary">Save project</button><input id="fileInput" type="file" accept=".crochet,.json,application/json" hidden></div></header>
 <div class="layout"><aside class="palette-panel"><h2>Stitch palette <span class="count">24</span></h2><div class="symbol-grid" id="symbols"></div><div class="help-actions"><button type="button" id="howToBtn">ⓘ How to use the studio</button><button type="button" id="shortcutsBtn">⌨ Keyboard shortcuts</button></div></aside>
-<main class="workspace"><div class="tools"><button id="clearBtn" type="button">Clear all stitches</button><button id="rowGuide" type="button" aria-pressed="false">Row guides</button><button id="circleGuide" type="button" aria-pressed="false">Circular guides</button><button id="handBtn" title="Pan the infinite canvas">✋ Hand</button><button id="undoBtn" title="Undo">↶ Undo</button><button id="redoBtn" title="Redo">↷ Redo</button><button id="duplicateBtn">Duplicate</button><button id="deleteBtn">Delete</button><span style="flex:1"></span><label style="margin:0">Zoom <select id="zoom"><option value="0.5">50%</option><option value="0.75">75%</option><option value="1" selected>100%</option><option value="1.25">125%</option><option value="1.5">150%</option></select></label></div><div class="studio-info" aria-label="Project information"><span>Project: <strong id="infoProject">Untitled pattern</strong></span><span>Stitches: <strong id="infoStitches">0</strong></span><span>Selected: <strong id="infoSelected">0</strong></span><span>Zoom: <strong id="infoZoom">100%</strong></span></div><div class="canvas-wrap" id="canvasWrap"><svg id="canvas" preserveAspectRatio="none" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" aria-label="Editable crochet diagram"><g id="guides" pointer-events="none"></g><g id="stitches"></g></svg></div><div class="small">Hand tool: drag to pan the infinite board · Mouse wheel: zoom in/out · Select tool: drag stitches or box-select · Guides are not exported.</div><div class="small" id="status" role="status">Ready. Choose a symbol to begin.</div></main>
+<main class="workspace"><div class="tools"><button id="clearBtn" type="button">Clear all stitches</button><button id="rowGuide" type="button" aria-pressed="false">Row guides</button><button id="circleGuide" type="button" aria-pressed="false">Circular guides</button><button id="handBtn" title="Pan the infinite canvas">✋ Hand</button><button id="undoBtn" title="Undo">↶ Undo</button><button id="redoBtn" title="Redo">↷ Redo</button><button id="duplicateBtn">Duplicate</button><button id="deleteBtn">Delete</button><span style="flex:1"></span><label style="margin:0">Zoom <select id="zoom"><option value="0.5">50%</option><option value="0.75">75%</option><option value="1" selected>100%</option><option value="1.25">125%</option><option value="1.5">150%</option></select></label></div><div class="studio-info" aria-label="Project information"><span>Project: <strong id="infoProject">Untitled pattern</strong></span><span>Stitches: <strong id="infoStitches">0</strong></span><span>Selected: <strong id="infoSelected">0</strong></span><span>Zoom: <strong id="infoZoom">100%</strong></span></div><div class="canvas-wrap" id="canvasWrap"><svg id="canvas" preserveAspectRatio="none" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" aria-label="Editable crochet diagram"><g id="guides" pointer-events="none"></g><g id="stitches"></g></svg></div><div class="small">Hand tool: drag to pan the infinite board · Mouse wheel / two-finger pinch: zoom in/out · Select tool: drag stitches or box-select · Guides are not exported.</div><div class="small" id="status" role="status">Ready. Choose a symbol to begin.</div></main>
 <aside class="properties-panel"><h2>Canvas guides</h2><label><input type="checkbox" id="gridToggle" checked> Square grid</label><label><input type="checkbox" id="snapToggle"> Snap to grid</label><label><input type="checkbox" id="rowToggle"> Horizontal rows</label><label><input type="checkbox" id="circleToggle"> Concentric circles</label><label>Grid spacing <input id="spacing" type="number" min="10" max="100" value="25"> px</label><div class="section"><h2>Stitch properties</h2><div id="selectionInfo" class="small">No stitch selected</div><label>Rotation <input type="range" id="rotation" min="-180" max="180" value="0" disabled></label><label>Size <output id="sizeValue">36 px</output> <input type="range" id="size" min="12" max="100" value="36" disabled></label><label>Color <span class="swatches" id="colorSwatches"><button type="button" class="swatch" data-color="#111111" title="Black" aria-label="Black stitch color"></button><button type="button" class="swatch" data-color="#2563eb" title="Blue" aria-label="Blue stitch color"></button><button type="button" class="swatch" data-color="#dc2626" title="Red" aria-label="Red stitch color"></button></span></label></div><div class="section"><h2>Pattern designer</h2><label for="designerName">Designed by</label><input id="designerName" type="text" placeholder="Your name" maxlength="80" style="max-width:100%;width:100%"><p class="note">Included in PNG and SVG exports.</p></div><div class="section"><h2>Share your pattern</h2><div class="tools"><button id="svgBtn">Export SVG</button><button id="pngBtn">Export PNG</button></div><p class="note">SVG is ideal for scalable, print-quality charts. PNG exports a high-resolution image. Project files preserve editable stitches and guidelines.</p></div></aside></div>
-<dialog id="howToDialog" class="studio-dialog"><div class="dialog-head"><h2>How to use the studio</h2><button type="button" class="dialog-close" aria-label="Close">✕</button></div><p>Choose a stitch from the palette, then double-click the canvas on a laptop or double-tap empty board space on a touchscreen to place it. Double-click a palette symbol to place one in the visible board's centre.</p><p>Tap or click an existing stitch to select it. Drag a stitch to move it; on touchscreens, hold a stitch for 0.5 seconds and drag the large blue move grip (✥) below the selection to reposition without covering the stitch with your finger. Drag across empty space to box-select several. A selected stitch has a dashed blue frame: drag a corner to resize or the round handle above it to rotate. Drag a selected stitch to move the selection together. Duplicate to repeat stitches with the same properties.</p><p>Use the Hand tool to pan the whiteboard. Zoom using the mouse wheel, Zoom selector, or a two-finger pinch on the board (mobile/tablet). Row and Circular guides are optional alignment aids and are not included in exports.</p><p>Save project downloads an editable file that you can open later. Export PNG or SVG for a finished diagram.</p></dialog>
+<dialog id="howToDialog" class="studio-dialog"><div class="dialog-head"><h2>How to use the studio</h2><button type="button" class="dialog-close" aria-label="Close">✕</button></div><p>Choose a stitch from the palette, then double-click the canvas with a mouse or double-tap an empty board area on a touchscreen to place it. Double-click a palette symbol to place one in the visible board's centre.</p><p>Drag individual stitches or drag across empty space to box-select several. On touchscreens, hold a stitch for 0.5 seconds to show Canva-style resize corners, rotate button, and a separate Move (✥) grip below the stitch. Drag the Move grip without covering the stitch. Drag a selected stitch to move the selection together. Duplicate to repeat stitches with the same properties.</p><p>Use the Hand tool to pan the whiteboard, your mouse wheel to zoom, or pinch with two fingers on the board to zoom on touchscreens. Row and Circular guides are optional alignment aids and are not included in exports.</p><p>Save project downloads an editable file that you can open later. Export PNG or SVG for a finished diagram.</p></dialog>
 <dialog id="shortcutsDialog" class="studio-dialog"><div class="dialog-head"><h2>Keyboard shortcuts</h2><button type="button" class="dialog-close" aria-label="Close">✕</button></div><div class="shortcut-list"><span>Delete</span><span>Remove selected stitches</span><span>Ctrl/Cmd + Z</span><span>Undo</span><span>Ctrl/Cmd + Y</span><span>Redo</span><span>Ctrl/Cmd + D</span><span>Duplicate</span><span>Ctrl/Cmd + C / V</span><span>Copy / paste</span><span>Shift + click</span><span>Multi-select</span><span>Left-drag empty space</span><span>Box selection</span><span>Right-click stitch</span><span>Delete</span><span>Space + drag</span><span>Pan whiteboard</span><span>Mouse wheel</span><span>Zoom</span><span>Arrow keys</span><span>Nudge selection</span><span>Escape</span><span>Pointer tool / close help</span></div></dialog>
 <footer class="studio-footer" role="contentinfo"><span class="ownership">© 2026 Ery Yusof · Ery Loop &amp; Stitches! Studio</span><span class="terms">An independent crochet diagram maker created by Ery and shared free for personal, non-commercial use. Under the studio’s stated terms, patterns created using this tool may not be sold commercially. Please respect these terms when using the studio.</span></footer>
 <script>
@@ -110,194 +105,124 @@ const defs=[["pointer","Select",""],["chain","Chain (ch)","<ellipse rx=\"14\" ry
 ["direction","Direction","<path d=\"M-22 0 H21 M10 -11 L21 0 L10 11\"/>" ]];
 const symbolGroups={"pointer":"Tools","chain":"Basic stitches","slip":"Basic stitches","sc":"Basic stitches","hdc":"Basic stitches","dc":"Basic stitches","tr":"Basic stitches","dtr":"Basic stitches","sc2tog":"Decreases","sc3tog":"Decreases","dc2tog":"Decreases","dc3tog":"Decreases","cluster3dc":"Clusters & shells","cluster3hdc":"Clusters & shells","popcorn5":"Clusters & shells","shell":"Clusters & shells","picot":"Clusters & shells","fpdc":"Post & loop stitches","bpdc":"Post & loop stitches","blo":"Post & loop stitches","flo":"Post & loop stitches","increase":"Increase & decrease","decrease":"Increase & decrease","start":"Chart markers","direction":"Chart markers"};
 const symbolAbbr={"pointer":"Select","chain":"ch","slip":"sl st","sc":"sc","hdc":"hdc","dc":"dc","tr":"tr","dtr":"dtr","sc2tog":"sc2tog","sc3tog":"sc3tog","dc2tog":"dc2tog","dc3tog":"dc3tog","cluster3dc":"3-dc cluster","cluster3hdc":"3-hdc cluster / puff","popcorn5":"5-dc popcorn","shell":"5-dc shell","picot":"ch-3 picot","fpdc":"FPdc","bpdc":"BPdc","blo":"BLO","flo":"FLO","increase":"inc","decrease":"dec","start":"Start","direction":"Direction"};
-let boardW=1200,boardH=900,spaceDown=false,pan=null,handMode=false,camX=0,camY=0,zoomLevel=1;const wrap=$('canvasWrap');function visibleSize(){return {w:Math.max(100,wrap.clientWidth)/zoomLevel,h:Math.max(100,wrap.clientHeight)/zoomLevel}}function syncBoard(){const {w,h}=visibleSize();canvas.setAttribute('viewBox',`${camX} ${camY} ${w} ${h}`);drawGuides()}function expandBoard(x,y){}function setZoom(z,clientX,clientY){z=Math.max(.2,Math.min(5,z));const rect=canvas.getBoundingClientRect(),px=clientX==null?rect.width/2:clientX-rect.left,py=clientY==null?rect.height/2:clientY-rect.top;camX+=px/zoomLevel-px/z;camY+=py/zoomLevel-py/z;zoomLevel=z;$('zoom').value=String(z);if($('zoom').value!==String(z)){const opt=document.createElement('option');opt.value=String(z);opt.textContent=Math.round(z*100)+'%';$('zoom').append(opt);$('zoom').value=String(z)}syncBoard();updateInfo();if(typeof drawTransformUI==='function')drawTransformUI()}let tool='pointer',items=[],selected=null,selection=new Set(),clipboard=[],pasteCount=0,nextId=1,history=[],future=[],drag=null;const settings=()=>({grid:$('gridToggle').checked,snap:$('snapToggle').checked,rows:$('rowToggle').checked,circles:$('circleToggle').checked,spacing:+$('spacing').value||25});const state=()=>JSON.stringify({items,settings:settings(),name:$('projectName').value,designer:$('designerName').value,boardW,boardH,nextId});function checkpoint(){history.push(state());if(history.length>100)history.shift();future=[];buttons()};function restore(raw){const s=JSON.parse(raw);items=s.items;nextId=s.nextId||Math.max(1,...items.map(x=>x.id+1));$('projectName').value=s.name||'Untitled pattern';$('designerName').value=s.designer||'';boardW=1200;boardH=900;syncBoard();applySettings(s.settings||{});selected=null;selection.clear();render()};function buttons(){$('undoBtn').disabled=!history.length;$('redoBtn').disabled=!future.length;$('deleteBtn').disabled=$('duplicateBtn').disabled=selection.size===0};function undo(){if(!history.length)return;future.push(state());restore(history.pop())}function redo(){if(!future.length)return;history.push(state());restore(future.pop())}
-function el(tag,attrs={},parent){const e=document.createElementNS(NS,tag);for(const [k,v]of Object.entries(attrs))e.setAttribute(k,v);if(parent)parent.appendChild(e);return e}function art(type){return defs.find(d=>d[0]===type)?.[2]||''}function iconSVG(type){return `<svg viewBox="-28 -28 56 56"><g fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round">${art(type)}</g></svg>`}let currentGroup='';for(const [id,name]of defs){const group=symbolGroups[id];if(group!==currentGroup){currentGroup=group;const h=document.createElement('div');h.className='palette-group-title';h.textContent=group;$('symbols').appendChild(h)}const b=document.createElement('button');b.className='symbol'+(id==='pointer'?' active':'');b.dataset.tool=id;b.title=name;b.setAttribute('aria-label',name);b.innerHTML=id==='pointer'?'<strong style="font-size:25px">↖</strong><span>Select</span>':iconSVG(id)+`<span>${symbolAbbr[id]||name}</span>`;b.onclick=()=>setTool(id);b.ondblclick=()=>{if(id!=='pointer')addStitch(id,camX+visibleSize().w/2,camY+visibleSize().h/2)};$('symbols').appendChild(b)}function setTool(t){if(typeof lastEmptyTap!=='undefined')lastEmptyTap=null;tool=t;document.querySelectorAll('.symbol').forEach(b=>b.classList.toggle('active',b.dataset.tool===t));$('status').textContent=t==='pointer'?'Pointer tool: drag stitches to reposition.':`Double-click canvas to place ${defs.find(d=>d[0]===t)?.[1]}.`}
+let boardW=1200,boardH=900,spaceDown=false,pan=null,handMode=false,camX=0,camY=0,zoomLevel=1;const wrap=$('canvasWrap');function visibleSize(){return {w:Math.max(100,wrap.clientWidth)/zoomLevel,h:Math.max(100,wrap.clientHeight)/zoomLevel}}function syncBoard(){const {w,h}=visibleSize();canvas.setAttribute('viewBox',`${camX} ${camY} ${w} ${h}`);drawGuides()}function expandBoard(x,y){}function setZoom(z,clientX,clientY){z=Math.max(.2,Math.min(5,z));const rect=canvas.getBoundingClientRect(),px=clientX==null?rect.width/2:clientX-rect.left,py=clientY==null?rect.height/2:clientY-rect.top;camX+=px/zoomLevel-px/z;camY+=py/zoomLevel-py/z;zoomLevel=z;$('zoom').value=String(z);if($('zoom').value!==String(z)){const opt=document.createElement('option');opt.value=String(z);opt.textContent=Math.round(z*100)+'%';$('zoom').append(opt);$('zoom').value=String(z)}syncBoard();updateInfo()}let tool='pointer',items=[],selected=null,selection=new Set(),clipboard=[],pasteCount=0,nextId=1,history=[],future=[],drag=null;const settings=()=>({grid:$('gridToggle').checked,snap:$('snapToggle').checked,rows:$('rowToggle').checked,circles:$('circleToggle').checked,spacing:+$('spacing').value||25});const state=()=>JSON.stringify({items,settings:settings(),name:$('projectName').value,designer:$('designerName').value,boardW,boardH,nextId});function checkpoint(){history.push(state());if(history.length>100)history.shift();future=[];buttons()};function restore(raw){const s=JSON.parse(raw);items=s.items;nextId=s.nextId||Math.max(1,...items.map(x=>x.id+1));$('projectName').value=s.name||'Untitled pattern';$('designerName').value=s.designer||'';boardW=1200;boardH=900;syncBoard();applySettings(s.settings||{});selected=null;selection.clear();render()};function buttons(){$('undoBtn').disabled=!history.length;$('redoBtn').disabled=!future.length;$('deleteBtn').disabled=$('duplicateBtn').disabled=selection.size===0};function undo(){if(!history.length)return;future.push(state());restore(history.pop())}function redo(){if(!future.length)return;history.push(state());restore(future.pop())}
+function el(tag,attrs={},parent){const e=document.createElementNS(NS,tag);for(const [k,v]of Object.entries(attrs))e.setAttribute(k,v);if(parent)parent.appendChild(e);return e}function art(type){return defs.find(d=>d[0]===type)?.[2]||''}function iconSVG(type){return `<svg viewBox="-28 -28 56 56"><g fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round">${art(type)}</g></svg>`}let currentGroup='';for(const [id,name]of defs){const group=symbolGroups[id];if(group!==currentGroup){currentGroup=group;const h=document.createElement('div');h.className='palette-group-title';h.textContent=group;$('symbols').appendChild(h)}const b=document.createElement('button');b.className='symbol'+(id==='pointer'?' active':'');b.dataset.tool=id;b.title=name;b.setAttribute('aria-label',name);b.innerHTML=id==='pointer'?'<strong style="font-size:25px">↖</strong><span>Select</span>':iconSVG(id)+`<span>${symbolAbbr[id]||name}</span>`;b.onclick=()=>setTool(id);b.ondblclick=()=>{if(id!=='pointer')addStitch(id,camX+visibleSize().w/2,camY+visibleSize().h/2)};$('symbols').appendChild(b)}function setTool(t){lastTouchTap=null;hideControls();tool=t;document.querySelectorAll('.symbol').forEach(b=>b.classList.toggle('active',b.dataset.tool===t));$('status').textContent=t==='pointer'?'Pointer tool: drag stitches to reposition.':`Double-click canvas to place ${defs.find(d=>d[0]===t)?.[1]}.`}
 function applySettings(s){for(const [key,id]of [['grid','gridToggle'],['snap','snapToggle'],['rows','rowToggle'],['circles','circleToggle']])$(id).checked=!!s[key];$('spacing').value=s.spacing||25}function drawGuides(){guides.replaceChildren();const s=settings(),step=Math.max(10,s.spacing),{w,h}=visibleSize(),left=camX-100,top=camY-100,right=camX+w+100,bottom=camY+h+100;if(s.grid){const pattern=el('pattern',{id:'boardGrid',width:step,height:step,patternUnits:'userSpaceOnUse'},el('defs',{},guides));el('path',{d:`M ${step} 0 L 0 0 0 ${step}`,fill:'none',stroke:'#e0e9df','stroke-width':.8},pattern);el('rect',{x:left,y:top,width:right-left,height:bottom-top,fill:'url(#boardGrid)'},guides)}if(s.rows){const interval=step*2;for(let y=Math.floor(top/interval)*interval;y<=bottom;y+=interval)el('line',{x1:left,y1:y,x2:right,y2:y,stroke:'#4d9b80','stroke-width':1.3,'stroke-dasharray':'8 6',opacity:.85},guides)}if(s.circles){el('line',{x1:400,y1:top,x2:400,y2:bottom,stroke:'#9bc4b4','stroke-dasharray':'5 5'},guides);el('line',{x1:left,y1:300,x2:right,y2:300,stroke:'#9bc4b4','stroke-dasharray':'5 5'},guides);const maxR=Math.hypot(Math.max(Math.abs(left-400),Math.abs(right-400)),Math.max(Math.abs(top-300),Math.abs(bottom-300)));for(let r=step*2;r<maxR;r+=step*2)el('circle',{cx:400,cy:300,r,fill:'none',stroke:'#83b0a0','stroke-width':1,'stroke-dasharray':'7 5'},guides)}}
 
-function render(){updateInfo();drawGuides();layer.replaceChildren();for(const it of items){const g=el('g',{class:'stitch'+(selection.has(it.id)?' selected':''),transform:`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36})`,'data-id':it.id},layer);const symbol=el('g',{fill:'none',stroke:it.color||'#233e3a','stroke-width':2.8,'stroke-linecap':'round','stroke-linejoin':'round'},g);symbol.innerHTML=art(it.type);el('rect',{x:-25,y:-28,width:50,height:56,class:'selection'},g);el('rect',{x:-26,y:-29,width:52,height:58,fill:'transparent',stroke:'none'},g)}const it=selection.size===1?items.find(i=>i.id===selected):null;$('selectionInfo').textContent=selection.size>1?selection.size+' stitches selected':it?(defs.find(d=>d[0]===it.type)?.[1]||'Unknown stitch')+' · Stitch #'+it.id:'No stitch selected';for(const id of ['rotation','size'])$(id).disabled=!it;if(it){$('rotation').value=it.rotation;$('size').value=it.size;document.querySelectorAll('.swatch').forEach(b=>b.classList.toggle('active',b.dataset.color===it.color))}document.querySelectorAll('.swatch').forEach(b=>{b.disabled=!selection.size;b.classList.toggle('active',selection.size===1&&it&&b.dataset.color===it.color)});$('sizeValue').textContent=it?it.size+' px':selection.size>1?'Multiple':'—';buttons();drawTransformUI()}
+function render(){updateInfo();drawGuides();layer.replaceChildren();for(const it of items){const g=el('g',{class:'stitch'+(selection.has(it.id)?' selected':''),transform:`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36})`,'data-id':it.id},layer);const symbol=el('g',{fill:'none',stroke:it.color||'#233e3a','stroke-width':2.8,'stroke-linecap':'round','stroke-linejoin':'round'},g);symbol.innerHTML=art(it.type);el('rect',{x:-25,y:-28,width:50,height:56,class:'selection'},g);el('rect',{x:-26,y:-29,width:52,height:58,fill:'transparent',stroke:'none'},g)}const it=selection.size===1?items.find(i=>i.id===selected):null;$('selectionInfo').textContent=selection.size>1?selection.size+' stitches selected':it?(defs.find(d=>d[0]===it.type)?.[1]||'Unknown stitch')+' · Stitch #'+it.id:'No stitch selected';for(const id of ['rotation','size'])$(id).disabled=!it;if(it){$('rotation').value=it.rotation;$('size').value=it.size;document.querySelectorAll('.swatch').forEach(b=>b.classList.toggle('active',b.dataset.color===it.color))}document.querySelectorAll('.swatch').forEach(b=>{b.disabled=!selection.size;b.classList.toggle('active',selection.size===1&&it&&b.dataset.color===it.color)});$('sizeValue').textContent=it?it.size+' px':selection.size>1?'Multiple':'—';buttons();drawControls()}
 function updateInfo(){$('infoProject').textContent=$('projectName').value.trim()||'Untitled pattern';$('infoStitches').textContent=items.length;$('infoSelected').textContent=selection.size;$('infoZoom').textContent=Math.round(zoomLevel*100)+'%'}$('projectName').addEventListener('input',updateInfo);function coords(e){const p=canvas.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(canvas.getScreenCTM().inverse())}function snap(n){const s=settings();return s.snap?Math.round(n/s.spacing)*s.spacing:n}function addStitch(type,x,y){checkpoint();const it={id:nextId++,type,x:snap(x),y:snap(y),rotation:0,size:36,color:'#233e3a'};items.push(it);expandBoard(it.x,it.y);selection=new Set([it.id]);selected=it.id;render()}
-canvas.addEventListener('dblclick',e=>{if(e.pointerType==='touch'||handMode||tool==='pointer'||e.target.closest('.stitch'))return;const p=coords(e);addStitch(tool,p.x,p.y)});
-// Marquee selection is drawn in a separate overlay, never rebuilt during pointer movement.
-const transformUI=el('g',{id:'transformUI'},canvas);
- const marquee=el('rect',{fill:'#76529b', 'fill-opacity':'.10',stroke:'#76529b','stroke-width':1.5,'stroke-dasharray':'5 4',visibility:'hidden','pointer-events':'none'},canvas);
-function updateMarquee(a,b){marquee.setAttribute('x',Math.min(a.x,b.x));marquee.setAttribute('y',Math.min(a.y,b.y));marquee.setAttribute('width',Math.abs(a.x-b.x));marquee.setAttribute('height',Math.abs(a.y-b.y));marquee.setAttribute('visibility','visible')}
-function endDrag(){if(!drag)return;if(drag.kind==='box'){marquee.setAttribute('visibility','hidden');const a=drag.start,b=drag.end||a;const left=Math.min(a.x,b.x),right=Math.max(a.x,b.x),top=Math.min(a.y,b.y),bottom=Math.max(a.y,b.y);if(Math.hypot(a.x-b.x,a.y-b.y)>4){const found=items.filter(it=>it.x>=left&&it.x<=right&&it.y>=top&&it.y<=bottom).map(it=>it.id);selection=drag.additive?new Set([...drag.previous,...found]):new Set(found)}else if(!drag.additive)selection.clear();selected=selection.size===1?[...selection][0]:null}drag=null;render()}
-// Pointer handling uses geometry, not event targets: pointer capture and SVG redraws
-// otherwise change the target mid-gesture on some Android browsers.
- // Transform controls are rendered separately from the stitch layer to avoid interrupting drags.
- let gesture=null,transformVisible=false;const touches=new Map();let holdTimer=null,lastEmptyTap=null;
+canvas.addEventListener('dblclick',e=>{if(e.pointerType==='touch'||suppressTouchClickUntil>performance.now())return;if(handMode||tool==='pointer'||e.target.closest('.stitch'))return;const p=coords(e);addStitch(tool,p.x,p.y)});
+ // Base v3.6 geometry and mouse behavior retained; touch gestures are handled separately.
+ const marquee=el('rect',{fill:'#76529b','fill-opacity':'.10',stroke:'#76529b','stroke-width':1.5,'stroke-dasharray':'5 4',visibility:'hidden','pointer-events':'none'},canvas);
+ const transformControls=el('g',{id:'transformControls'},canvas);
+ let controlsVisible=false,holdTimer=null,touchGesture=null,lastTouchTap=null,suppressTouchClickUntil=0;
+ const touchPointers=new Map();
+ function updateMarquee(a,b){marquee.setAttribute('x',Math.min(a.x,b.x));marquee.setAttribute('y',Math.min(a.y,b.y));marquee.setAttribute('width',Math.abs(a.x-b.x));marquee.setAttribute('height',Math.abs(a.y-b.y));marquee.setAttribute('visibility','visible')}
+ function hitStitch(p){for(let i=items.length-1;i>=0;i--){const it=items[i],rad=30*it.size/36;const ang=-it.rotation*Math.PI/180,dx=p.x-it.x,dy=p.y-it.y;const xx=dx*Math.cos(ang)-dy*Math.sin(ang),yy=dx*Math.sin(ang)+dy*Math.cos(ang);if(Math.abs(xx)<=rad&&Math.abs(yy)<=rad*1.13)return it}return null}
+ function bounds(){const chosen=items.filter(i=>selection.has(i.id));if(!chosen.length)return null;const minX=Math.min(...chosen.map(i=>i.x-30*i.size/36)),minY=Math.min(...chosen.map(i=>i.y-32*i.size/36)),maxX=Math.max(...chosen.map(i=>i.x+30*i.size/36)),maxY=Math.max(...chosen.map(i=>i.y+32*i.size/36));return {x:minX,y:minY,w:maxX-minX,h:maxY-minY,cx:(minX+maxX)/2,cy:(minY+maxY)/2}}
+ function hideControls(){controlsVisible=false;transformControls.replaceChildren()}
+ function drawControls(){transformControls.replaceChildren();if(!controlsVisible)return;const b=bounds();if(!b)return;const k=1/zoomLevel,stem=37*k;
+  el('rect',{x:b.x,y:b.y,width:b.w,height:b.h,class:'outline'},transformControls);
+  for(const [corner,x,y] of [['nw',b.x,b.y],['ne',b.x+b.w,b.y],['sw',b.x,b.y+b.h],['se',b.x+b.w,b.y+b.h]])el('circle',{cx:x,cy:y,r:9*k,class:'control','data-control':'resize','data-corner':corner},transformControls);
+  el('line',{x1:b.cx,y1:b.y,x2:b.cx,y2:b.y-stem,class:'stem'},transformControls);
+  el('circle',{cx:b.cx,cy:b.y-stem,r:16*k,class:'round-control','data-control':'rotate'},transformControls);
+  const rt=el('text',{x:b.cx,y:b.y-stem+5*k,'text-anchor':'middle','font-size':19*k,fill:'white','pointer-events':'none'},transformControls);rt.textContent='↻';
+  el('line',{x1:b.cx,y1:b.y+b.h,x2:b.cx,y2:b.y+b.h+stem,class:'stem'},transformControls);
+  el('circle',{cx:b.cx,cy:b.y+b.h+stem,r:19*k,class:'round-control','data-control':'move'},transformControls);
+  const mt=el('text',{x:b.cx,y:b.y+b.h+stem+6*k,'text-anchor':'middle','font-size':20*k,fill:'white','pointer-events':'none'},transformControls);mt.textContent='✥';
+ }
  function cancelHold(){if(holdTimer!==null){clearTimeout(holdTimer);holdTimer=null}}
- function hideHandles(){transformVisible=false;drawTransformUI()}
- function selectionBounds(){const chosen=items.filter(i=>selection.has(i.id));if(!chosen.length)return null;
-  const minX=Math.min(...chosen.map(i=>i.x-29*i.size/36)),maxX=Math.max(...chosen.map(i=>i.x+29*i.size/36));
-  const minY=Math.min(...chosen.map(i=>i.y-32*i.size/36)),maxY=Math.max(...chosen.map(i=>i.y+32*i.size/36));
-  return {x:minX,y:minY,w:maxX-minX,h:maxY-minY,cx:(minX+maxX)/2,cy:(minY+maxY)/2};}
- function drawTransformUI(){transformUI.replaceChildren();if(!transformVisible||!selection.size)return;
-  const b=selectionBounds();if(!b)return;const r=7/zoomLevel,offset=31/zoomLevel;
-  el('rect',{x:b.x,y:b.y,width:b.w,height:b.h,class:'transform-frame'},transformUI);
-  for(const [corner,x,y] of [['nw',b.x,b.y],['ne',b.x+b.w,b.y],['sw',b.x,b.y+b.h],['se',b.x+b.w,b.y+b.h]])
-   el('circle',{cx:x,cy:y,r,class:'resize-knob','data-transform':'resize','data-corner':corner},transformUI);
-  el('line',{x1:b.cx,y1:b.y,x2:b.cx,y2:b.y-offset,class:'rotate-line'},transformUI);
-  el('circle',{cx:b.cx,cy:b.y-offset,r:11/zoomLevel,class:'rotate-knob','data-transform':'rotate'},transformUI);
-  const label=el('text',{x:b.cx,y:b.y-offset+4/zoomLevel,'font-size':13/zoomLevel,'text-anchor':'middle',fill:'white','pointer-events':'none'},transformUI);label.textContent='↻';
-  // Large touch-friendly move grip below the selection; finger need not cover the stitch.
-  const moveY=b.y+b.h+offset;
-  el('line',{x1:b.cx,y1:b.y+b.h,x2:b.cx,y2:moveY,stroke:'#2474c7','stroke-width':1.5,'pointer-events':'none'},transformUI);
-  el('circle',{cx:b.cx,cy:moveY,r:16/zoomLevel,fill:'#2474c7',stroke:'#fff','stroke-width':2,'data-transform':'move-handle',style:'cursor:grab;pointer-events:all'},transformUI);
-  const moveLabel=el('text',{x:b.cx,y:moveY+5/zoomLevel,'font-size':17/zoomLevel,'text-anchor':'middle',fill:'white','pointer-events':'none'},transformUI);moveLabel.textContent='✥';
+ function beginControl(e){const handle=e.target.closest?.('[data-control]');if(!handle||!controlsVisible)return false;const b=bounds();if(!b)return false;const p=coords(e),corner=handle.dataset.corner||'',op=handle.dataset.control;
+  const anchor={x:corner.includes('w')?b.x+b.w:b.x,y:corner.includes('n')?b.y+b.h:b.y};
+  touchGesture={kind:'control',id:e.pointerId,op,corner,b,anchor,start:p,angle:Math.atan2(p.y-b.cy,p.x-b.cx),original:items.filter(i=>selection.has(i.id)).map(i=>({...i})),saved:false};
+  cancelHold();return true;
  }
- function beginTransform(e,handle){const b=selectionBounds();if(!b)return false;
-  const p=coords(e);
-  if(handle.dataset.transform==='move-handle'){
-   gesture={kind:'move',id:e.pointerId,start:p,original:items.filter(i=>selection.has(i.id)).map(i=>({...i})),moved:false,saved:false,fromGrip:true};
-   return true;
-  }
-  const corner=handle.dataset.corner||'se';const anchor={x:corner.includes('w')?b.x+b.w:b.x,y:corner.includes('n')?b.y+b.h:b.y};
-  gesture={kind:'transform',id:e.pointerId,mode:handle.dataset.transform,corner,b,anchor,
-   startAngle:Math.atan2(p.y-b.cy,p.x-b.cx),original:items.filter(i=>selection.has(i.id)).map(i=>({...i})),saved:false};
-  return true;
- }
- function updateTransform(e){const g=gesture,p=coords(e);let factor=1,angle=0;
-  if(g.mode==='resize'){
-   const vx=(g.corner.includes('w')?-1:1)*(p.x-g.anchor.x),vy=(g.corner.includes('n')?-1:1)*(p.y-g.anchor.y);
-   factor=Math.max(.15,Math.min(8,(vx*g.b.w+vy*g.b.h)/(g.b.w*g.b.w+g.b.h*g.b.h)));
-  }else{
-   angle=(Math.atan2(p.y-g.b.cy,p.x-g.b.cx)-g.startAngle)*180/Math.PI;
-   angle=((angle+540)%360)-180;
-  }
+ function moveControl(e){const g=touchGesture,p=coords(e);if(!g||g.kind!=='control')return;let factor=1,angle=0,dx=0,dy=0;
+  if(g.op==='resize'){const vx=(g.corner.includes('w')?-1:1)*(p.x-g.anchor.x),vy=(g.corner.includes('n')?-1:1)*(p.y-g.anchor.y);factor=Math.max(.15,Math.min(5,(vx*g.b.w+vy*g.b.h)/(g.b.w*g.b.w+g.b.h*g.b.h)))}
+  if(g.op==='rotate'){angle=(Math.atan2(p.y-g.b.cy,p.x-g.b.cx)-g.angle)*180/Math.PI;angle=((angle+540)%360)-180}
+  if(g.op==='move'){dx=p.x-g.start.x;dy=p.y-g.start.y}
   if(!g.saved){checkpoint();g.saved=true}
   for(const orig of g.original){const it=items.find(i=>i.id===orig.id);if(!it)continue;
-   if(g.mode==='resize'){
-    it.x=g.anchor.x+(orig.x-g.anchor.x)*factor;it.y=g.anchor.y+(orig.y-g.anchor.y)*factor;
-    it.size=Math.max(12,Math.min(180,Math.round(orig.size*factor)));
-   }else{
-    const t=angle*Math.PI/180,dx=orig.x-g.b.cx,dy=orig.y-g.b.cy;
-    it.x=g.b.cx+dx*Math.cos(t)-dy*Math.sin(t);it.y=g.b.cy+dx*Math.sin(t)+dy*Math.cos(t);
-    it.rotation=((Math.round(orig.rotation+angle)%360)+360)%360;
-   }
+   if(g.op==='resize'){it.x=g.anchor.x+(orig.x-g.anchor.x)*factor;it.y=g.anchor.y+(orig.y-g.anchor.y)*factor;it.size=Math.max(12,Math.min(100,Math.round(orig.size*factor)))}
+   if(g.op==='rotate'){const r=angle*Math.PI/180,xx=orig.x-g.b.cx,yy=orig.y-g.b.cy;it.x=g.b.cx+xx*Math.cos(r)-yy*Math.sin(r);it.y=g.b.cy+xx*Math.sin(r)+yy*Math.cos(r);it.rotation=((Math.round(orig.rotation+angle)+540)%360)-180}
+   if(g.op==='move'){it.x=snap(orig.x+dx);it.y=snap(orig.y+dy)}
    const node=layer.querySelector('[data-id="'+it.id+'"]');if(node)node.setAttribute('transform',`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36})`);
   }
-  drawTransformUI();
+  drawControls();
  }
- function startPinch(){cancelHold();if(touches.size<2)return;const [a,b]=[...touches.values()];
-  const mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
-  gesture={kind:'pinch',distance:Math.max(1,Math.hypot(a.x-b.x,a.y-b.y)),zoom:zoomLevel,mid};
-  hideHandles();marquee.setAttribute('visibility','hidden');
+ function startPinch(){cancelHold();hideControls();marquee.setAttribute('visibility','hidden');drag=null;pan=null;lastTouchTap=null;
+  const pts=[...touchPointers.values()].slice(0,2),dx=pts[1].x-pts[0].x,dy=pts[1].y-pts[0].y;
+  touchGesture={kind:'pinch',distance:Math.max(1,Math.hypot(dx,dy)),initialZoom:zoomLevel,center:{x:(pts[0].x+pts[1].x)/2,y:(pts[0].y+pts[1].y)/2}};
  }
- function updatePinch(){if(touches.size<2||gesture?.kind!=='pinch')return;
-  const [a,b]=[...touches.values()];const mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
-  const z=gesture.zoom*Math.hypot(a.x-b.x,a.y-b.y)/gesture.distance;
-  setZoom(z,mid.x,mid.y);camX-=(mid.x-gesture.mid.x)/zoomLevel;camY-=(mid.y-gesture.mid.y)/zoomLevel;
-  gesture.mid=mid;syncBoard();
- }
- // Capture handlers isolate touch gestures from the original mouse drag logic.
- canvas.addEventListener('pointerdown',e=>{
-  if(e.button!==0)return;
-  const handle=e.target.closest?.('[data-transform]');
-  if(e.pointerType!=='touch'&&!handle)return;
-  e.preventDefault();e.stopImmediatePropagation();
-  if(e.pointerType==='touch')touches.set(e.pointerId,{x:e.clientX,y:e.clientY});
-  if(touches.size>=2){startPinch();return}
-  if(handle&&selection.size){beginTransform(e,handle)}
-  else if(e.pointerType==='touch'){
+ function pointerDown(e){if(e.button!==0)return;const touch=e.pointerType==='touch';
+  if(touch){e.preventDefault();suppressTouchClickUntil=performance.now()+800;touchPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+   if(touchPointers.size>=2){startPinch();return}
+   if(beginControl(e)){try{canvas.setPointerCapture(e.pointerId)}catch(_){}return}
    const p=coords(e),hit=hitStitch(p);
-   if(hit){cancelHold();hideHandles();if(!selection.has(hit.id))selection=new Set([hit.id]);selected=selection.size===1?[...selection][0]:null;
-    gesture={kind:'move',id:e.pointerId,start:p,original:items.filter(i=>selection.has(i.id)).map(i=>({...i})),moved:false,saved:false};
-    const heldId=e.pointerId;holdTimer=setTimeout(()=>{holdTimer=null;if(gesture?.kind==='move'&&gesture.id===heldId&&!gesture.moved&&touches.size===1){transformVisible=true;drawTransformUI()}},500);
-    layer.querySelectorAll('.stitch').forEach(n=>n.classList.toggle('selected',selection.has(+n.dataset.id)));
-   }else if(handMode||spaceDown){cancelHold();hideHandles();gesture={kind:'pan',id:e.pointerId,x:e.clientX,y:e.clientY,cx:camX,cy:camY}}
-   else{cancelHold();hideHandles();gesture={kind:'empty',id:e.pointerId,start:p,end:p,moved:false,previous:new Set(selection)};}
+   if(handMode||spaceDown){touchGesture={kind:'pan',id:e.pointerId,x:e.clientX,y:e.clientY,cx:camX,cy:camY};}
+   else if(hit){if(!selection.has(hit.id))selection=new Set([hit.id]);selected=selection.size===1?[...selection][0]:null;
+    touchGesture={kind:'move',id:e.pointerId,start:p,screen:{x:e.clientX,y:e.clientY},original:items.filter(i=>selection.has(i.id)).map(i=>({id:i.id,x:i.x,y:i.y})),moved:false,saved:false};
+    layer.querySelectorAll('.stitch').forEach(node=>node.classList.toggle('selected',selection.has(+node.dataset.id)));
+    cancelHold();holdTimer=setTimeout(()=>{if(touchGesture?.kind==='move'&&!touchGesture.moved&&touchPointers.size===1){controlsVisible=true;drawControls();$('status').textContent='Drag the blue Move, Resize or Rotate handle.'}},500);
+   }else{touchGesture={kind:'box',id:e.pointerId,start:p,end:p,screen:{x:e.clientX,y:e.clientY},moved:false,previous:new Set(selection)};hideControls()}
+   try{canvas.setPointerCapture(e.pointerId)}catch(_){}return;
   }
-  if(gesture?.kind!=='pinch')try{canvas.setPointerCapture(e.pointerId)}catch(_){}
- },true);
- canvas.addEventListener('pointermove',e=>{
-  if(e.pointerType!=='touch'&&gesture?.kind!=='transform')return;
-  if(e.pointerType==='touch'&&touches.has(e.pointerId))touches.set(e.pointerId,{x:e.clientX,y:e.clientY});
-  if(!gesture)return;e.preventDefault();e.stopImmediatePropagation();
-  if(gesture.kind==='pinch'){updatePinch();return}
-  if(gesture.id!==e.pointerId)return;
-  if(gesture.kind==='transform'){updateTransform(e);return}
-  if(gesture.kind==='pan'){camX=gesture.cx-(e.clientX-gesture.x)/zoomLevel;camY=gesture.cy-(e.clientY-gesture.y)/zoomLevel;syncBoard();return}
-  const p=coords(e),dx=p.x-gesture.start.x,dy=p.y-gesture.start.y;
-  if(Math.hypot(dx,dy)>3){gesture.moved=true;cancelHold();hideHandles()}
-  if(gesture.kind==='empty'){gesture.end=p;if(gesture.moved)updateMarquee(gesture.start,p);return}
-  if(gesture.kind==='move'&&gesture.moved){if(!gesture.saved){checkpoint();gesture.saved=true}
-   for(const orig of gesture.original){const it=items.find(i=>i.id===orig.id);if(!it)continue;
-    it.x=snap(orig.x+dx);it.y=snap(orig.y+dy);
-    const n=layer.querySelector('[data-id="'+it.id+'"]');if(n)n.setAttribute('transform',`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36})`);
-   }
+  // Original v3.6 mouse selection and dragging.
+  e.preventDefault();const p=coords(e),hit=hitStitch(p);
+  if(hit){const id=hit.id;if(e.shiftKey){if(selection.has(id))selection.delete(id);else selection.add(id)}else if(!selection.has(id))selection=new Set([id]);selected=selection.size===1?[...selection][0]:null;
+   drag={kind:'move',start:p,orig:items.filter(it=>selection.has(it.id)).map(it=>({id:it.id,x:it.x,y:it.y})),saved:false,moved:false};layer.querySelectorAll('.stitch').forEach(node=>node.classList.toggle('selected',selection.has(+node.dataset.id)));
+  }else{drag={kind:'box',start:p,end:p,additive:e.shiftKey,previous:new Set(selection)};if(!e.shiftKey){selection.clear();selected=null;layer.querySelectorAll('.stitch').forEach(node=>node.classList.remove('selected'))}}
+  try{canvas.setPointerCapture(e.pointerId)}catch(_){}
+ }
+ function pointerMove(e){if(e.pointerType==='touch'){
+   if(!touchPointers.has(e.pointerId))return;e.preventDefault();touchPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});const g=touchGesture;if(!g)return;
+   if(g.kind==='pinch'){if(touchPointers.size<2)return;const pts=[...touchPointers.values()].slice(0,2);const dist=Math.hypot(pts[1].x-pts[0].x,pts[1].y-pts[0].y);setZoom(g.initialZoom*dist/g.distance,g.center.x,g.center.y);return}
+   if(g.id!==e.pointerId)return;
+   if(g.kind==='control'){moveControl(e);return}
+   if(g.kind==='pan'){camX=g.cx-(e.clientX-g.x)/zoomLevel;camY=g.cy-(e.clientY-g.y)/zoomLevel;syncBoard();return}
+   const distance=Math.hypot(e.clientX-g.screen.x,e.clientY-g.screen.y);
+   if(g.kind==='box'){if(distance>7){g.moved=true;g.end=coords(e);updateMarquee(g.start,g.end)}return}
+   if(g.kind==='move'){
+    if(distance<=7&&!g.moved)return;
+    cancelHold();hideControls();g.moved=true;lastTouchTap=null;
+    if(!g.saved){checkpoint();g.saved=true}
+    const p=coords(e),dx=p.x-g.start.x,dy=p.y-g.start.y;
+    for(const orig of g.original){const it=items.find(i=>i.id===orig.id);if(!it)continue;it.x=snap(orig.x+dx);it.y=snap(orig.y+dy);const node=layer.querySelector('[data-id="'+it.id+'"]');if(node)node.setAttribute('transform',`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36})`)}
+   }return;
   }
- },true);
- function finishGesture(e){if(e.pointerType!=='touch'&&gesture?.kind!=='transform')return;cancelHold();
-  if(e.pointerType==='touch')touches.delete(e.pointerId);
-  if(!gesture)return;e.preventDefault();e.stopImmediatePropagation();
-  const g=gesture;if(g.kind==='pinch'){
-   if(touches.size===0){gesture=null;hideHandles();render()}
-   return;
-  }
+  if(!drag)return;e.preventDefault();const p=coords(e);
+  if(drag.kind==='box'){drag.end=p;updateMarquee(drag.start,p);return}
+  const dx=p.x-drag.start.x,dy=p.y-drag.start.y;if(Math.hypot(dx,dy)<=2&&!drag.moved)return;
+  if(!drag.saved){checkpoint();drag.saved=true}drag.moved=true;
+  for(const orig of drag.orig){const it=items.find(x=>x.id===orig.id);if(!it)continue;it.x=snap(orig.x+dx);it.y=snap(orig.y+dy);const node=layer.querySelector('[data-id="'+it.id+'"]');if(node)node.setAttribute('transform',`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36})`);expandBoard(it.x,it.y)}
+ }
+ function finishPointer(e){if(e.pointerType==='touch'){
+  if(!touchPointers.has(e.pointerId))return;e.preventDefault();touchPointers.delete(e.pointerId);cancelHold();const g=touchGesture;if(!g)return;
+  if(g.kind==='pinch'){if(!touchPointers.size){touchGesture=null;render()}return}
   if(g.id!==e.pointerId)return;
-  gesture=null;marquee.setAttribute('visibility','hidden');
-  if(g.kind==='move'&&g.moved)hideHandles();
-  if(g.kind==='empty'){
-   if(g.moved){const a=g.start,b=g.end;const l=Math.min(a.x,b.x),r=Math.max(a.x,b.x),t=Math.min(a.y,b.y),bt=Math.max(a.y,b.y);
-    selection=new Set(items.filter(i=>i.x>=l&&i.x<=r&&i.y>=t&&i.y<=bt).map(i=>i.id));selected=selection.size===1?[...selection][0]:null;
-   }else if(tool!=='pointer'){
-    const now=performance.now(),p=coords(e);
-    const isDouble=lastEmptyTap&&lastEmptyTap.tool===tool&&now-lastEmptyTap.time<450&&
-      Math.hypot(e.clientX-lastEmptyTap.x,e.clientY-lastEmptyTap.y)<38;
-    lastEmptyTap=isDouble?null:{time:now,x:e.clientX,y:e.clientY,tool};
-    if(isDouble){addStitch(tool,p.x,p.y);return}
-    $('status').textContent='Tap the same area again to place the stitch.';
-   }
-   else{selection.clear();selected=null}
+  touchGesture=null;
+  if(g.kind==='control'){render();return}
+  if(g.kind==='box'){
+   marquee.setAttribute('visibility','hidden');if(g.moved){const a=g.start,b=g.end,left=Math.min(a.x,b.x),right=Math.max(a.x,b.x),top=Math.min(a.y,b.y),bottom=Math.max(a.y,b.y);const found=items.filter(it=>{const r=28*it.size/36;return it.x+r>=left&&it.x-r<=right&&it.y+r>=top&&it.y-r<=bottom}).map(it=>it.id);selection=new Set(found);selected=selection.size===1?[...selection][0]:null;lastTouchTap=null}
+   else if(e.type==='pointerup'&&!handMode&&tool!=='pointer'){
+    const now=performance.now(),last=lastTouchTap,valid=last&&last.tool===tool&&now-last.time<=420&&Math.hypot(e.clientX-last.x,e.clientY-last.y)<=35;
+    lastTouchTap=valid?null:{time:now,x:e.clientX,y:e.clientY,tool};
+    if(valid){const p=coords(e);addStitch(tool,p.x,p.y);return}
+    $('status').textContent='Double-tap an empty area to place a stitch.';
+   }else{lastTouchTap=null;selection.clear();selected=null}
   }
-  render();
+  if(g.kind==='move'&&g.moved)hideControls();
+  render();return;
  }
- canvas.addEventListener('pointerup',finishGesture,true);
- canvas.addEventListener('pointercancel',finishGesture,true);
- // Mouse resize/rotation uses the same isolated capture handlers; mouse drag stays original.
-function hitStitch(p){for(let i=items.length-1;i>=0;i--){const it=items[i],rad=30*it.size/36;const ang=-it.rotation*Math.PI/180,dx=p.x-it.x,dy=p.y-it.y;const xx=dx*Math.cos(ang)-dy*Math.sin(ang),yy=dx*Math.sin(ang)+dy*Math.cos(ang);if(Math.abs(xx)<=rad&&Math.abs(yy)<=rad*1.13)return it}return null}
-let frame=0;
-canvas.addEventListener('pointerdown',e=>{
- if(e.button!==0)return;
- e.preventDefault();
- const p=coords(e),hit=hitStitch(p);
- if(hit){
-  const id=hit.id;
-  if(e.shiftKey){if(selection.has(id))selection.delete(id);else selection.add(id)}
-  else if(!selection.has(id))selection=new Set([id]);
-  selected=selection.size===1?[...selection][0]:null;
-  hideHandles();drag={kind:'move',start:p,orig:items.filter(it=>selection.has(it.id)).map(it=>({id:it.id,x:it.x,y:it.y})),saved:false,moved:false};
-  // Do not rebuild SVG while the pointer is down; it disrupts drag on Android.
-  layer.querySelectorAll('.stitch').forEach(node=>{const on=selection.has(+node.dataset.id);node.classList.toggle('selected',on)});
- }else{
-  hideHandles();drag={kind:'box',start:p,end:p,additive:e.shiftKey,previous:new Set(selection)};
-  if(!e.shiftKey){selection.clear();selected=null;layer.querySelectorAll('.stitch').forEach(node=>node.classList.remove('selected'))}
- }
- try{canvas.setPointerCapture(e.pointerId)}catch(_){}
-});
-canvas.addEventListener('pointermove',e=>{
- if(!drag)return;e.preventDefault();const p=coords(e);
- if(drag.kind==='box'){drag.end=p;updateMarquee(drag.start,p);return}
- const dx=p.x-drag.start.x,dy=p.y-drag.start.y;
- if(Math.hypot(dx,dy)<=2&&!drag.moved)return;
- if(!drag.saved){checkpoint();drag.saved=true}drag.moved=true;
- for(const orig of drag.orig){const it=items.find(x=>x.id===orig.id);if(!it)continue;it.x=snap(orig.x+dx);it.y=snap(orig.y+dy);const node=layer.querySelector('[data-id="'+it.id+'"]');if(node)node.setAttribute('transform',`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36})`);expandBoard(it.x,it.y)}
-});
-function finishPointer(){if(frame){cancelAnimationFrame(frame);frame=0}if(!drag)return;
- if(drag.kind==='box'){
-  marquee.setAttribute('visibility','hidden');const a=drag.start,b=drag.end||a;
-  const left=Math.min(a.x,b.x),right=Math.max(a.x,b.x),top=Math.min(a.y,b.y),bottom=Math.max(a.y,b.y);
-  if(Math.hypot(a.x-b.x,a.y-b.y)>4){const found=items.filter(it=>{const r=28*it.size/36;return it.x+r>=left&&it.x-r<=right&&it.y+r>=top&&it.y-r<=bottom}).map(it=>it.id);selection=drag.additive?new Set([...drag.previous,...found]):new Set(found)}
-  else if(!drag.additive)selection.clear();
-  selected=selection.size===1?[...selection][0]:null;
- }
+ if(!drag)return;if(drag.kind==='box'){marquee.setAttribute('visibility','hidden');const a=drag.start,b=drag.end||a,left=Math.min(a.x,b.x),right=Math.max(a.x,b.x),top=Math.min(a.y,b.y),bottom=Math.max(a.y,b.y);if(Math.hypot(a.x-b.x,a.y-b.y)>4){const found=items.filter(it=>{const r=28*it.size/36;return it.x+r>=left&&it.x-r<=right&&it.y+r>=top&&it.y-r<=bottom}).map(it=>it.id);selection=drag.additive?new Set([...drag.previous,...found]):new Set(found)}else if(!drag.additive)selection.clear();selected=selection.size===1?[...selection][0]:null}
  drag=null;render();
-}
-canvas.addEventListener('pointerup',finishPointer);
-canvas.addEventListener('pointercancel',finishPointer);
-canvas.addEventListener('lostpointercapture',finishPointer);
-canvas.addEventListener('contextmenu',e=>{e.preventDefault();if(e.pointerType==='touch')return;const hit=hitStitch(coords(e));if(hit){if(!selection.has(hit.id)){selection=new Set([hit.id]);selected=hit.id}remove()}else if(selection.size)remove()});
+ }
+ canvas.addEventListener('pointerdown',pointerDown);
+ canvas.addEventListener('pointermove',pointerMove);
+ canvas.addEventListener('pointerup',finishPointer);
+ canvas.addEventListener('pointercancel',finishPointer);
+ // Ignore browser-generated context menus on touch: never duplicate or delete on a hold.
+ canvas.addEventListener('contextmenu',e=>{e.preventDefault();if(e.pointerType==='touch'||suppressTouchClickUntil>performance.now())return;const hit=hitStitch(coords(e));if(hit){if(!selection.has(hit.id)){selection=new Set([hit.id]);selected=hit.id}remove()}else if(selection.size)remove()});
 for(const id of ['gridToggle','snapToggle','rowToggle','circleToggle','spacing'])$(id).addEventListener('change',()=>{checkpoint();render()});for(const [id,key]of [['rotation','rotation'],['size','size']]){let before=null;$(id).addEventListener('pointerdown',()=>{if(selected!==null)before=state()});$(id).addEventListener('input',e=>{const it=items.find(x=>x.id===selected);if(!it)return;if(before===null)checkpoint();else if(before){history.push(before);future=[];before=''}it[key]=+e.target.value;render()});$(id).addEventListener('change',()=>before=null)}
 document.querySelectorAll('.swatch').forEach(b=>b.addEventListener('click',()=>{if(!selection.size)return;checkpoint();items.filter(it=>selection.has(it.id)).forEach(it=>it.color=b.dataset.color);render()}));
 function remove(){if(!selection.size)return;checkpoint();items=items.filter(i=>!selection.has(i.id));selection.clear();selected=null;render()}
@@ -307,6 +232,6 @@ function duplicate(){if(!selection.size)return;copy();paste()}
 function selectAll(){selection=new Set(items.map(i=>i.id));selected=selection.size===1?[...selection][0]:null;setTool('pointer');render()}
 $('deleteBtn').onclick=remove;$('duplicateBtn').onclick=duplicate;$('undoBtn').onclick=undo;$('redoBtn').onclick=redo;$('clearBtn').onclick=()=>{if(items.length&&confirm('Remove all stitches?')){checkpoint();items=[];selected=null;selection.clear();render()}};$('newBtn').onclick=()=>{if(items.length&&!confirm('Start a new project? Save your current project first if needed.'))return;checkpoint();items=[];selected=null;selection.clear();nextId=1;$('projectName').value='Untitled pattern';$('designerName').value='';boardW=1200;boardH=900;camX=0;camY=0;setZoom(1);render()};
 function download(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}function safeName(){return ($('projectName').value.trim()||'crochet-chart').replace(/[^a-z0-9 _-]/gi,'').replace(/\s+/g,'-').slice(0,80)||'crochet-chart'}$('saveBtn').onclick=()=>download(new Blob([JSON.stringify({format:'crochet-studio',version:2,...JSON.parse(state())},null,2)],{type:'application/json'}),safeName()+'.crochet');$('openBtn').onclick=()=>$('fileInput').click();$('fileInput').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());if(!Array.isArray(data.items)||data.items.length>50000||!data.items.every(x=>defs.some(d=>d[0]===x.type&&d[0]!=='pointer')&&[x.x,x.y,x.rotation,x.size].every(Number.isFinite)&&typeof x.id==='number'&&/^#[0-9a-f]{6}$/i.test(x.color)))throw Error('Invalid or unsupported project');checkpoint();restore(JSON.stringify(data));$('status').textContent='Project opened: '+file.name}catch(err){alert('Could not open project: '+err.message)}e.target.value=''};
-function exportSVG(){const padding=48;const minX=items.length?Math.min(...items.map(i=>i.x-i.size)):0,minY=items.length?Math.min(...items.map(i=>i.y-i.size)):0,maxX=items.length?Math.max(...items.map(i=>i.x+i.size)):800,maxY=items.length?Math.max(...items.map(i=>i.y+i.size)):600;const x=minX-padding,y=minY-padding,w=Math.max(400,maxX-minX+2*padding),h=Math.max(300,maxY-minY+2*padding),foot=75;const svg=el('svg',{xmlns:NS,viewBox:`${x} ${y} ${w} ${h+foot}`,width:w,height:h+foot});el('rect',{x,y,width:w,height:h+foot,fill:'#ffffff'},svg);for(const it of items){const g=el('g',{transform:`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36})`,fill:'none',stroke:it.color,'stroke-width':2.8,'stroke-linecap':'round','stroke-linejoin':'round'},svg);g.innerHTML=art(it.type)}const designer=($('designerName').value.trim()||'________________').slice(0,80);el('line',{x1:x+18,x2:x+w-18,y1:y+h+8,y2:y+h+8,stroke:'#dce3d8'},svg);const credit=el('text',{x:x+w/2,y:y+h+32,'text-anchor':'middle','font-family':'Arial, sans-serif','font-size':14,fill:'#233e3a'},svg);credit.textContent='Pattern designed by '+designer;const brand=el('text',{x:x+w/2,y:y+h+54,'text-anchor':'middle','font-family':'Arial, sans-serif','font-size':12,fill:'#64746c'},svg);brand.textContent='Made with Ery Loop & Stitches! Studio';return {source:new XMLSerializer().serializeToString(svg),width:w,height:h+foot}}$('svgBtn').onclick=()=>download(new Blob([exportSVG().source],{type:'image/svg+xml;charset=utf-8'}),safeName()+'.svg');$('pngBtn').onclick=()=>{const data=exportSVG(),blob=new Blob([data.source],{type:'image/svg+xml;charset=utf-8'}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{const c=document.createElement('canvas');const scale=Math.min(3,8192/Math.max(data.width,data.height));c.width=Math.round(data.width*scale);c.height=Math.round(data.height*scale);const ctx=c.getContext('2d');ctx.drawImage(img,0,0,c.width,c.height);c.toBlob(b=>{if(b)download(b,safeName()+'.png');URL.revokeObjectURL(url)},'image/png')};img.onerror=()=>{URL.revokeObjectURL(url);alert('PNG export failed. Try SVG export instead.')};img.src=url};for(const [buttonId,dialogId] of [['howToBtn','howToDialog'],['shortcutsBtn','shortcutsDialog']]){const dlg=$(dialogId);$(buttonId).addEventListener('click',()=>dlg.showModal());dlg.querySelector('.dialog-close').addEventListener('click',()=>dlg.close());dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()})}function syncGuideButtons(){for(const [btn,check] of [['rowGuide','rowToggle'],['circleGuide','circleToggle']]){$(btn).classList.toggle('active',$(check).checked);$(btn).setAttribute('aria-pressed',String($(check).checked))}}for(const [btn,check] of [['rowGuide','rowToggle'],['circleGuide','circleToggle']]){$(btn).addEventListener('click',()=>{$(check).checked=!$(check).checked;$(check).dispatchEvent(new Event('change',{bubbles:true}));syncGuideButtons()});$(check).addEventListener('change',syncGuideButtons)}syncGuideButtons();$('zoom').onchange=()=>setZoom(+$('zoom').value);wrap.addEventListener('wheel',e=>{e.preventDefault();setZoom(zoomLevel*Math.exp(-e.deltaY*.0015),e.clientX,e.clientY)},{passive:false});$('handBtn').onclick=()=>{handMode=!handMode;$('handBtn').classList.toggle('active',handMode);canvas.classList.toggle('hand-mode',handMode);$('status').textContent=handMode?'Hand tool: drag anywhere to pan the board.':'Select tool: drag stitches or select an area.'};canvas.addEventListener('pointerdown',e=>{if(!(handMode||spaceDown)||e.button!==0)return;pan={x:e.clientX,y:e.clientY,cx:camX,cy:camY};e.stopImmediatePropagation();e.preventDefault();try{canvas.setPointerCapture(e.pointerId)}catch(_){}} ,true);canvas.addEventListener('pointermove',e=>{if(!pan)return;camX=pan.cx-(e.clientX-pan.x)/zoomLevel;camY=pan.cy-(e.clientY-pan.y)/zoomLevel;syncBoard();e.stopImmediatePropagation();e.preventDefault()},true);function endPan(e){if(!pan)return;pan=null;e.stopImmediatePropagation();e.preventDefault()}canvas.addEventListener('pointerup',endPan,true);canvas.addEventListener('pointercancel',endPan,true);document.addEventListener('keyup',e=>{if(e.code==='Space')spaceDown=false});window.addEventListener('blur',()=>{spaceDown=false;pan=null});if(typeof ResizeObserver!=='undefined')new ResizeObserver(()=>syncBoard()).observe(wrap);
+function exportSVG(){const padding=48;const minX=items.length?Math.min(...items.map(i=>i.x-i.size)):0,minY=items.length?Math.min(...items.map(i=>i.y-i.size)):0,maxX=items.length?Math.max(...items.map(i=>i.x+i.size)):800,maxY=items.length?Math.max(...items.map(i=>i.y+i.size)):600;const x=minX-padding,y=minY-padding,w=Math.max(400,maxX-minX+2*padding),h=Math.max(300,maxY-minY+2*padding),foot=75;const svg=el('svg',{xmlns:NS,viewBox:`${x} ${y} ${w} ${h+foot}`,width:w,height:h+foot});el('rect',{x,y,width:w,height:h+foot,fill:'#ffffff'},svg);for(const it of items){const g=el('g',{transform:`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36})`,fill:'none',stroke:it.color,'stroke-width':2.8,'stroke-linecap':'round','stroke-linejoin':'round'},svg);g.innerHTML=art(it.type)}const designer=($('designerName').value.trim()||'________________').slice(0,80);el('line',{x1:x+18,x2:x+w-18,y1:y+h+8,y2:y+h+8,stroke:'#dce3d8'},svg);const credit=el('text',{x:x+w/2,y:y+h+32,'text-anchor':'middle','font-family':'Arial, sans-serif','font-size':14,fill:'#233e3a'},svg);credit.textContent='Pattern designed by '+designer;const brand=el('text',{x:x+w/2,y:y+h+54,'text-anchor':'middle','font-family':'Arial, sans-serif','font-size':12,fill:'#64746c'},svg);brand.textContent='Made with Ery Loop & Stitches! Studio';return {source:new XMLSerializer().serializeToString(svg),width:w,height:h+foot}}$('svgBtn').onclick=()=>download(new Blob([exportSVG().source],{type:'image/svg+xml;charset=utf-8'}),safeName()+'.svg');$('pngBtn').onclick=()=>{const data=exportSVG(),blob=new Blob([data.source],{type:'image/svg+xml;charset=utf-8'}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{const c=document.createElement('canvas');const scale=Math.min(3,8192/Math.max(data.width,data.height));c.width=Math.round(data.width*scale);c.height=Math.round(data.height*scale);const ctx=c.getContext('2d');ctx.drawImage(img,0,0,c.width,c.height);c.toBlob(b=>{if(b)download(b,safeName()+'.png');URL.revokeObjectURL(url)},'image/png')};img.onerror=()=>{URL.revokeObjectURL(url);alert('PNG export failed. Try SVG export instead.')};img.src=url};for(const [buttonId,dialogId] of [['howToBtn','howToDialog'],['shortcutsBtn','shortcutsDialog']]){const dlg=$(dialogId);$(buttonId).addEventListener('click',()=>dlg.showModal());dlg.querySelector('.dialog-close').addEventListener('click',()=>dlg.close());dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()})}function syncGuideButtons(){for(const [btn,check] of [['rowGuide','rowToggle'],['circleGuide','circleToggle']]){$(btn).classList.toggle('active',$(check).checked);$(btn).setAttribute('aria-pressed',String($(check).checked))}}for(const [btn,check] of [['rowGuide','rowToggle'],['circleGuide','circleToggle']]){$(btn).addEventListener('click',()=>{$(check).checked=!$(check).checked;$(check).dispatchEvent(new Event('change',{bubbles:true}));syncGuideButtons()});$(check).addEventListener('change',syncGuideButtons)}syncGuideButtons();$('zoom').onchange=()=>setZoom(+$('zoom').value);wrap.addEventListener('wheel',e=>{e.preventDefault();setZoom(zoomLevel*Math.exp(-e.deltaY*.0015),e.clientX,e.clientY)},{passive:false});$('handBtn').onclick=()=>{handMode=!handMode;$('handBtn').classList.toggle('active',handMode);canvas.classList.toggle('hand-mode',handMode);$('status').textContent=handMode?'Hand tool: drag anywhere to pan the board.':'Select tool: drag stitches or select an area.'};canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'||!(handMode||spaceDown)||e.button!==0)return;pan={x:e.clientX,y:e.clientY,cx:camX,cy:camY};e.stopImmediatePropagation();e.preventDefault();try{canvas.setPointerCapture(e.pointerId)}catch(_){}} ,true);canvas.addEventListener('pointermove',e=>{if(e.pointerType==='touch'||!pan)return;camX=pan.cx-(e.clientX-pan.x)/zoomLevel;camY=pan.cy-(e.clientY-pan.y)/zoomLevel;syncBoard();e.stopImmediatePropagation();e.preventDefault()},true);function endPan(e){if(e.pointerType==='touch'||!pan)return;pan=null;e.stopImmediatePropagation();e.preventDefault()}canvas.addEventListener('pointerup',endPan,true);canvas.addEventListener('pointercancel',endPan,true);document.addEventListener('keyup',e=>{if(e.code==='Space')spaceDown=false});window.addEventListener('blur',()=>{spaceDown=false;pan=null});if(typeof ResizeObserver!=='undefined')new ResizeObserver(()=>syncBoard()).observe(wrap);
 document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;if(e.code==='Space'){e.preventDefault();spaceDown=true;return}const mod=e.ctrlKey||e.metaKey;if(mod&&e.key.toLowerCase()==='a'){e.preventDefault();selectAll()}else if(mod&&e.key.toLowerCase()==='c'){e.preventDefault();copy()}else if(mod&&e.key.toLowerCase()==='v'){e.preventDefault();paste()}else if(mod&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo()}else if(mod&&e.key.toLowerCase()==='y'){e.preventDefault();redo()}else if(mod&&e.key.toLowerCase()==='d'){e.preventDefault();duplicate()}else if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();remove()}else if(e.key==='Escape')setTool('pointer');else if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)&&selection.size){e.preventDefault();checkpoint();const n=e.shiftKey?10:1;for(const it of items.filter(x=>selection.has(x.id))){it.x+=e.key==='ArrowLeft'?-n:e.key==='ArrowRight'?n:0;it.y+=e.key==='ArrowUp'?-n:e.key==='ArrowDown'?n:0}render()}});syncBoard();render();})();
 </script></body></html>
