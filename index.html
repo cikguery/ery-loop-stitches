@@ -248,16 +248,16 @@ canvas.addEventListener('pointerdown',e=>{
   e.preventDefault();e.stopImmediatePropagation();
   if(activeHandle)return;
   touchPoints.set(e.pointerId,{x:e.clientX,y:e.clientY});
-  try{canvas.setPointerCapture(e.pointerId)}catch(_){}
   if(touchPoints.size>=2){beginPinch();return}
   const p=coords(e),hit=hitStitch(p);
   touchGesture={kind:'single',id:e.pointerId,x:e.clientX,y:e.clientY,start:p,
     hitId:hit?hit.id:null,moved:false,saved:false,
     original:hit?{x:hit.x,y:hit.y}:null,camX,camY,
     group:hit&&selection.has(hit.id)&&selection.size>1?items.filter(i=>selection.has(i.id)).map(i=>({id:i.id,x:i.x,y:i.y})):null};
-  if(hit&&tool==='pointer'){
+  if(hit){
     if(!selection.has(hit.id)){selection=new Set([hit.id]);selected=hit.id}
-    hideTransformHandles();render();
+    hideTransformHandles();
+    layer.querySelectorAll('.stitch').forEach(node=>node.classList.toggle('selected',selection.has(+node.dataset.id)));
     longPressTimer=setTimeout(()=>{
       longPressTimer=null;
       if(!touchGesture||touchGesture.kind!=='single'||touchGesture.moved||touchPoints.size!==1)return;
@@ -315,7 +315,7 @@ function finishTouch(e){
     if(touchPoints.size===0){touchGesture=null;render()}
     return; // Never interpret either pinch finger release as a tap.
   }
-  if(g.kind==='handles'){if(touchPoints.size===0)touchGesture=null;return}
+  if(g.kind==='handles'){if(touchPoints.size===0){touchGesture=null;render()}return}
   if(g.kind==='single'&&g.moved&&g.hitId===null&&!handMode&&!spaceDown){
     const a=g.start,b=coords(e);
     marquee.setAttribute('visibility','hidden');
@@ -344,7 +344,7 @@ function finishTouch(e){
 }
 canvas.addEventListener('pointerup',finishTouch,true);
 canvas.addEventListener('pointercancel',finishTouch,true);
-canvas.addEventListener('lostpointercapture',finishTouch,true);
+// Do not treat lostpointercapture as finger release: Android can emit it during DOM updates.
 // Android may synthesize a contextmenu event after a long touch.
 let recentTouchAt=0;
 canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')recentTouchAt=Date.now()},true);
@@ -390,7 +390,7 @@ canvas.addEventListener('pointerup',finishPointer);
 canvas.addEventListener('click',e=>{if(e.sourceCapabilities?.firesTouchEvents||Date.now()-recentTouchAt<1200){e.preventDefault();e.stopImmediatePropagation()}},true);
 canvas.addEventListener('dblclick',e=>{if(e.sourceCapabilities?.firesTouchEvents||Date.now()-recentTouchAt<1200){e.preventDefault();e.stopImmediatePropagation()}},true);
 canvas.addEventListener('pointercancel',finishPointer);
-canvas.addEventListener('lostpointercapture',finishPointer);
+
 canvas.addEventListener('contextmenu',e=>{e.preventDefault();if(e.pointerType==='touch'||e.sourceCapabilities?.firesTouchEvents||touchPoints.size||Date.now()-recentTouchAt<1500)return;const hit=hitStitch(coords(e));if(hit){if(!selection.has(hit.id)){selection=new Set([hit.id]);selected=hit.id}remove()}else if(selection.size)remove()});
 for(const id of ['gridToggle','snapToggle','rowToggle','circleToggle','spacing'])$(id).addEventListener('change',()=>{checkpoint();render()});for(const [id,key]of [['rotation','rotation'],['size','size']]){let before=null;$(id).addEventListener('pointerdown',()=>{if(selected!==null)before=state()});$(id).addEventListener('input',e=>{const it=items.find(x=>x.id===selected);if(!it)return;if(before===null)checkpoint();else if(before){history.push(before);future=[];before=''}it[key]=+e.target.value;render()});$(id).addEventListener('change',()=>before=null)}
 document.querySelectorAll('.swatch').forEach(b=>b.addEventListener('click',()=>{if(!selection.size)return;checkpoint();items.filter(it=>selection.has(it.id)).forEach(it=>it.color=b.dataset.color);render()}));
