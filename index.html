@@ -125,7 +125,9 @@ function endDrag(){if(!drag)return;if(drag.kind==='box'){marquee.setAttribute('v
 // Pointer handling uses geometry, not event targets: pointer capture and SVG redraws
 // otherwise change the target mid-gesture on some Android browsers.
  // Transform controls are rendered separately from the stitch layer to avoid interrupting drags.
- let gesture=null,transformVisible=true;const touches=new Map();
+ let gesture=null,transformVisible=false;const touches=new Map();let holdTimer=null;
+ function cancelHold(){if(holdTimer!==null){clearTimeout(holdTimer);holdTimer=null}}
+ function hideHandles(){transformVisible=false;drawTransformUI()}
  function selectionBounds(){const chosen=items.filter(i=>selection.has(i.id));if(!chosen.length)return null;
   const minX=Math.min(...chosen.map(i=>i.x-29*i.size/36)),maxX=Math.max(...chosen.map(i=>i.x+29*i.size/36));
   const minY=Math.min(...chosen.map(i=>i.y-32*i.size/36)),maxY=Math.max(...chosen.map(i=>i.y+32*i.size/36));
@@ -167,10 +169,10 @@ function endDrag(){if(!drag)return;if(drag.kind==='box'){marquee.setAttribute('v
   }
   drawTransformUI();
  }
- function startPinch(){if(touches.size<2)return;const [a,b]=[...touches.values()];
+ function startPinch(){cancelHold();if(touches.size<2)return;const [a,b]=[...touches.values()];
   const mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
   gesture={kind:'pinch',distance:Math.max(1,Math.hypot(a.x-b.x,a.y-b.y)),zoom:zoomLevel,mid};
-  transformVisible=false;drawTransformUI();marquee.setAttribute('visibility','hidden');
+  hideHandles();marquee.setAttribute('visibility','hidden');
  }
  function updatePinch(){if(touches.size<2||gesture?.kind!=='pinch')return;
   const [a,b]=[...touches.values()];const mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
@@ -189,11 +191,12 @@ function endDrag(){if(!drag)return;if(drag.kind==='box'){marquee.setAttribute('v
   if(handle&&selection.size){beginTransform(e,handle)}
   else if(e.pointerType==='touch'){
    const p=coords(e),hit=hitStitch(p);
-   if(hit){if(!selection.has(hit.id))selection=new Set([hit.id]);selected=selection.size===1?[...selection][0]:null;
+   if(hit){cancelHold();hideHandles();if(!selection.has(hit.id))selection=new Set([hit.id]);selected=selection.size===1?[...selection][0]:null;
     gesture={kind:'move',id:e.pointerId,start:p,original:items.filter(i=>selection.has(i.id)).map(i=>({...i})),moved:false,saved:false};
+    const heldId=e.pointerId;holdTimer=setTimeout(()=>{holdTimer=null;if(gesture?.kind==='move'&&gesture.id===heldId&&!gesture.moved&&touches.size===1){transformVisible=true;drawTransformUI()}},500);
     layer.querySelectorAll('.stitch').forEach(n=>n.classList.toggle('selected',selection.has(+n.dataset.id)));
-   }else if(handMode||spaceDown){gesture={kind:'pan',id:e.pointerId,x:e.clientX,y:e.clientY,cx:camX,cy:camY}}
-   else{gesture={kind:'empty',id:e.pointerId,start:p,end:p,moved:false,previous:new Set(selection)};}
+   }else if(handMode||spaceDown){cancelHold();hideHandles();gesture={kind:'pan',id:e.pointerId,x:e.clientX,y:e.clientY,cx:camX,cy:camY}}
+   else{cancelHold();hideHandles();gesture={kind:'empty',id:e.pointerId,start:p,end:p,moved:false,previous:new Set(selection)};}
   }
   if(gesture?.kind!=='pinch')try{canvas.setPointerCapture(e.pointerId)}catch(_){}
  },true);
@@ -206,7 +209,7 @@ function endDrag(){if(!drag)return;if(drag.kind==='box'){marquee.setAttribute('v
   if(gesture.kind==='transform'){updateTransform(e);return}
   if(gesture.kind==='pan'){camX=gesture.cx-(e.clientX-gesture.x)/zoomLevel;camY=gesture.cy-(e.clientY-gesture.y)/zoomLevel;syncBoard();return}
   const p=coords(e),dx=p.x-gesture.start.x,dy=p.y-gesture.start.y;
-  if(Math.hypot(dx,dy)>3){gesture.moved=true;transformVisible=false;drawTransformUI()}
+  if(Math.hypot(dx,dy)>3){gesture.moved=true;cancelHold();hideHandles()}
   if(gesture.kind==='empty'){gesture.end=p;if(gesture.moved)updateMarquee(gesture.start,p);return}
   if(gesture.kind==='move'&&gesture.moved){if(!gesture.saved){checkpoint();gesture.saved=true}
    for(const orig of gesture.original){const it=items.find(i=>i.id===orig.id);if(!it)continue;
@@ -215,15 +218,16 @@ function endDrag(){if(!drag)return;if(drag.kind==='box'){marquee.setAttribute('v
    }
   }
  },true);
- function finishGesture(e){if(e.pointerType!=='touch'&&gesture?.kind!=='transform')return;
+ function finishGesture(e){if(e.pointerType!=='touch'&&gesture?.kind!=='transform')return;cancelHold();
   if(e.pointerType==='touch')touches.delete(e.pointerId);
   if(!gesture)return;e.preventDefault();e.stopImmediatePropagation();
   const g=gesture;if(g.kind==='pinch'){
-   if(touches.size===0){gesture=null;transformVisible=true;render()}
+   if(touches.size===0){gesture=null;hideHandles();render()}
    return;
   }
   if(g.id!==e.pointerId)return;
-  gesture=null;transformVisible=true;marquee.setAttribute('visibility','hidden');
+  gesture=null;marquee.setAttribute('visibility','hidden');
+  if(g.kind==='move'&&g.moved)hideHandles();
   if(g.kind==='empty'){
    if(g.moved){const a=g.start,b=g.end;const l=Math.min(a.x,b.x),r=Math.max(a.x,b.x),t=Math.min(a.y,b.y),bt=Math.max(a.y,b.y);
     selection=new Set(items.filter(i=>i.x>=l&&i.x<=r&&i.y>=t&&i.y<=bt).map(i=>i.id));selected=selection.size===1?[...selection][0]:null;
@@ -246,11 +250,11 @@ canvas.addEventListener('pointerdown',e=>{
   if(e.shiftKey){if(selection.has(id))selection.delete(id);else selection.add(id)}
   else if(!selection.has(id))selection=new Set([id]);
   selected=selection.size===1?[...selection][0]:null;
-  transformVisible=false;drawTransformUI();drag={kind:'move',start:p,orig:items.filter(it=>selection.has(it.id)).map(it=>({id:it.id,x:it.x,y:it.y})),saved:false,moved:false};
+  hideHandles();drag={kind:'move',start:p,orig:items.filter(it=>selection.has(it.id)).map(it=>({id:it.id,x:it.x,y:it.y})),saved:false,moved:false};
   // Do not rebuild SVG while the pointer is down; it disrupts drag on Android.
   layer.querySelectorAll('.stitch').forEach(node=>{const on=selection.has(+node.dataset.id);node.classList.toggle('selected',on)});
  }else{
-  transformVisible=false;drawTransformUI();drag={kind:'box',start:p,end:p,additive:e.shiftKey,previous:new Set(selection)};
+  hideHandles();drag={kind:'box',start:p,end:p,additive:e.shiftKey,previous:new Set(selection)};
   if(!e.shiftKey){selection.clear();selected=null;layer.querySelectorAll('.stitch').forEach(node=>node.classList.remove('selected'))}
  }
  try{canvas.setPointerCapture(e.pointerId)}catch(_){}
