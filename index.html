@@ -129,7 +129,7 @@ let frame=0;
 
 // Two-finger pinch zoom on touchscreens. The midpoint remains anchored to the diagram.
 const touchPoints=new Map();let pinchGesture=null;let suppressTouchUntilClear=false;
-let longPressTimer=null,longPressOrigin=null,touchPasteArmed=false,touchTap=null;
+let longPressTimer=null,longPressOrigin=null,touchPasteArmed=false,touchTap=null,touchMenuGesture=false;
 const touchMenu=$('touchMenu');
 function hideTouchMenu(){touchMenu.classList.remove('visible')}
 function cancelLongPress(){if(longPressTimer!==null){clearTimeout(longPressTimer);longPressTimer=null}}
@@ -138,7 +138,7 @@ function showTouchMenu(clientX,clientY,hit){
  const x=Math.max(8,Math.min(clientX,window.innerWidth-230)),y=Math.max(8,Math.min(clientY,window.innerHeight-65));
  touchMenu.style.left=x+'px';touchMenu.style.top=y+'px';touchMenu.classList.add('visible');
 }
-$('touchCopy').onclick=()=>{copy();touchPasteArmed=true;hideTouchMenu();$('status').textContent='Copied. Tap empty board once to paste.'};
+$('touchCopy').onclick=()=>{copy();touchPasteArmed=true;hideTouchMenu();$('status').textContent='Copied. Tap empty board to paste; repeat to paste more.'};
 $('touchDelete').onclick=()=>{remove();touchPasteArmed=false;hideTouchMenu()};
 $('touchDismiss').onclick=hideTouchMenu;
 document.addEventListener('pointerdown',e=>{if(!touchMenu.contains(e.target)&&touchMenu.classList.contains('visible'))hideTouchMenu()},true);
@@ -172,6 +172,7 @@ function pinchUpdate(){
 }
 canvas.addEventListener('pointerdown',e=>{
  if(e.pointerType!=='touch')return;
+ if(touchMenuGesture){e.preventDefault();e.stopImmediatePropagation();return}
  touchPoints.set(e.pointerId,{x:e.clientX,y:e.clientY});
  if(touchPoints.size===1){
    const hit=hitStitch(coords(e));
@@ -184,6 +185,7 @@ canvas.addEventListener('pointerdown',e=>{
        if(touchPoints.size!==1||!longPressOrigin)return;
        // Discard the pending drag when opening the context menu.
        drag=null;marquee.setAttribute('visibility','hidden');
+       touchMenuGesture=true;
        showTouchMenu(longPressOrigin.x,longPressOrigin.y,longPressOrigin.hit);
        longPressOrigin=null;touchTap=null;
      },650);
@@ -210,6 +212,7 @@ canvas.addEventListener('pointerdown',e=>{
 },true);
 canvas.addEventListener('pointermove',e=>{
  if(e.pointerType!=='touch'||!touchPoints.has(e.pointerId))return;
+ if(touchMenuGesture){e.preventDefault();e.stopImmediatePropagation();return}
  touchPoints.set(e.pointerId,{x:e.clientX,y:e.clientY});
  if(longPressOrigin&&longPressOrigin.id===e.pointerId&&Math.hypot(e.clientX-longPressOrigin.x,e.clientY-longPressOrigin.y)>9){cancelLongPress();longPressOrigin=null}
  if(touchTap&&touchTap.id===e.pointerId&&Math.hypot(e.clientX-touchTap.x,e.clientY-touchTap.y)>9)touchTap=null;
@@ -222,6 +225,11 @@ function endTouchGesture(e){
  if(e.pointerType!=='touch')return;
  const had=touchPoints.delete(e.pointerId);
  if(!had)return;
+ if(touchMenuGesture){
+   cancelLongPress();longPressOrigin=null;touchTap=null;drag=null;
+   if(touchPoints.size===0)touchMenuGesture=false;
+   e.preventDefault();e.stopImmediatePropagation();return;
+ }
  cancelLongPress();longPressOrigin=null;
  const tap=touchTap&&touchTap.id===e.pointerId?touchTap:null;touchTap=null;
  if(tap&&!suppressTouchUntilClear&&!tap.hit&&touchPasteArmed&&clipboard.length){
@@ -286,7 +294,7 @@ function finishPointer(){if(frame){cancelAnimationFrame(frame);frame=0}if(!drag)
 canvas.addEventListener('pointerup',finishPointer);
 canvas.addEventListener('pointercancel',finishPointer);
 canvas.addEventListener('lostpointercapture',finishPointer);
-canvas.addEventListener('contextmenu',e=>{e.preventDefault();const hit=hitStitch(coords(e));if(hit){if(!selection.has(hit.id)){selection=new Set([hit.id]);selected=hit.id}remove()}else if(selection.size)remove()});
+canvas.addEventListener('contextmenu',e=>{e.preventDefault();if(e.pointerType==='touch'||e.sourceCapabilities?.firesTouchEvents||touchPoints.size||touchMenuGesture)return;const hit=hitStitch(coords(e));if(hit){if(!selection.has(hit.id)){selection=new Set([hit.id]);selected=hit.id}remove()}else if(selection.size)remove()});
 for(const id of ['gridToggle','snapToggle','rowToggle','circleToggle','spacing'])$(id).addEventListener('change',()=>{checkpoint();render()});for(const [id,key]of [['rotation','rotation'],['size','size']]){let before=null;$(id).addEventListener('pointerdown',()=>{if(selected!==null)before=state()});$(id).addEventListener('input',e=>{const it=items.find(x=>x.id===selected);if(!it)return;if(before===null)checkpoint();else if(before){history.push(before);future=[];before=''}it[key]=+e.target.value;render()});$(id).addEventListener('change',()=>before=null)}
 document.querySelectorAll('.swatch').forEach(b=>b.addEventListener('click',()=>{if(!selection.size)return;checkpoint();items.filter(it=>selection.has(it.id)).forEach(it=>it.color=b.dataset.color);render()}));
 function remove(){if(!selection.size)return;checkpoint();items=items.filter(i=>!selection.has(i.id));selection.clear();selected=null;render()}
