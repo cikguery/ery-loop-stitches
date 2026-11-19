@@ -109,13 +109,13 @@ let boardW=1200,boardH=900,spaceDown=false,pan=null,handMode=false,camX=0,camY=0
 function el(tag,attrs={},parent){const e=document.createElementNS(NS,tag);for(const [k,v]of Object.entries(attrs))e.setAttribute(k,v);if(parent)parent.appendChild(e);return e}function art(type){return defs.find(d=>d[0]===type)?.[2]||''}function iconSVG(type){return `<svg viewBox="-28 -28 56 56"><g fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round">${art(type)}</g></svg>`}let currentGroup='';for(const [id,name]of defs){const group=symbolGroups[id];if(group!==currentGroup){currentGroup=group;const h=document.createElement('div');h.className='palette-group-title';h.textContent=group;$('symbols').appendChild(h)}const b=document.createElement('button');b.className='symbol'+(id==='pointer'?' active':'');b.dataset.tool=id;b.title=name;b.setAttribute('aria-label',name);b.innerHTML=id==='pointer'?'<strong style="font-size:25px">↖</strong><span>Select</span>':iconSVG(id)+`<span>${symbolAbbr[id]||name}</span>`;b.onclick=()=>setTool(id);b.ondblclick=()=>{if(id!=='pointer')addStitch(id,camX+visibleSize().w/2,camY+visibleSize().h/2)};$('symbols').appendChild(b)}function setTool(t){lastTouchTap=null;hideControls();tool=t;document.querySelectorAll('.symbol').forEach(b=>b.classList.toggle('active',b.dataset.tool===t));$('status').textContent=t==='pointer'?'Pointer tool: drag stitches to reposition.':`Double-click canvas to place ${defs.find(d=>d[0]===t)?.[1]}.`}
 function applySettings(s){for(const [key,id]of [['grid','gridToggle'],['snap','snapToggle'],['rows','rowToggle'],['circles','circleToggle']])$(id).checked=!!s[key];$('spacing').value=s.spacing||25}let guideFrame=0,guideKey='';function scheduleGuides(force=false){if(force)guideKey='';if(guideFrame)return;guideFrame=requestAnimationFrame(()=>{guideFrame=0;drawGuides()})}function drawGuides(){const key=[Math.round(camX/5),Math.round(camY/5),Math.round(zoomLevel*100),wrap.clientWidth,wrap.clientHeight,JSON.stringify(settings())].join('|');if(key===guideKey)return;guideKey=key;guides.replaceChildren();const s=settings(),step=Math.max(10,s.spacing),{w,h}=visibleSize(),left=camX-100,top=camY-100,right=camX+w+100,bottom=camY+h+100;if(s.grid){const pattern=el('pattern',{id:'boardGrid',width:step,height:step,patternUnits:'userSpaceOnUse'},el('defs',{},guides));el('path',{d:`M ${step} 0 L 0 0 0 ${step}`,fill:'none',stroke:'#e0e9df','stroke-width':.8},pattern);el('rect',{x:left,y:top,width:right-left,height:bottom-top,fill:'url(#boardGrid)'},guides)}if(s.rows){const interval=step*2;for(let y=Math.floor(top/interval)*interval;y<=bottom;y+=interval)el('line',{x1:left,y1:y,x2:right,y2:y,stroke:'#4d9b80','stroke-width':1.3,'stroke-dasharray':'8 6',opacity:.85},guides)}if(s.circles){el('line',{x1:400,y1:top,x2:400,y2:bottom,stroke:'#9bc4b4','stroke-dasharray':'5 5'},guides);el('line',{x1:left,y1:300,x2:right,y2:300,stroke:'#9bc4b4','stroke-dasharray':'5 5'},guides);const maxR=Math.hypot(Math.max(Math.abs(left-400),Math.abs(right-400)),Math.max(Math.abs(top-300),Math.abs(bottom-300)));for(let r=step*2;r<maxR;r+=step*2)el('circle',{cx:400,cy:300,r,fill:'none',stroke:'#83b0a0','stroke-width':1,'stroke-dasharray':'7 5'},guides)}}
 
-function render(){updateInfo();scheduleGuides();layer.replaceChildren();for(const it of items){const g=el('g',{class:'stitch'+(selection.has(it.id)?' selected':''),transform:`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36*(it.scaleX||1)} ${it.size/36*(it.scaleY||1)})`,'data-id':it.id},layer);const symbol=el('g',{fill:'none',stroke:it.color||'#233e3a','stroke-width':2.8,'stroke-linecap':'round','stroke-linejoin':'round'},g);symbol.innerHTML=art(it.type);el('rect',{x:-25,y:-28,width:50,height:56,class:'selection'},g);el('rect',{x:-26,y:-29,width:52,height:58,fill:'transparent',stroke:'none'},g)}const it=selection.size===1?items.find(i=>i.id===selected):null;$('selectionInfo').textContent=selection.size>1?selection.size+' stitches selected':it?(defs.find(d=>d[0]===it.type)?.[1]||'Unknown stitch')+' · Stitch #'+it.id:'No stitch selected';for(const id of ['rotation','size','widthScale','heightScale'])$(id).disabled=!it;if(it){$('rotation').value=it.rotation;$('size').value=it.size;$('widthScale').value=Math.round((it.scaleX||1)*100);$('heightScale').value=Math.round((it.scaleY||1)*100);document.querySelectorAll('.swatch').forEach(b=>b.classList.toggle('active',b.dataset.color===it.color))}document.querySelectorAll('.swatch').forEach(b=>{b.disabled=!selection.size;b.classList.toggle('active',selection.size===1&&it&&b.dataset.color===it.color)});$('sizeValue').textContent=it?it.size+' px':selection.size>1?'Multiple':'—';buttons();$('groupBtn').disabled=selection.size<2;$('ungroupBtn').disabled=!items.some(i=>selection.has(i.id)&&i.groupId);drawControls()}
+function render(){updateInfo();scheduleGuides();layer.replaceChildren();for(const it of items){const g=el('g',{class:'stitch'+(selection.has(it.id)?' selected':''),transform:`translate(${it.x} ${it.y}) rotate(${it.rotation}) scale(${it.size/36*(it.scaleX||1)} ${it.size/36*(it.scaleY||1)})`,'data-id':it.id},layer);const symbol=el('g',{fill:'none',stroke:it.color||'#233e3a','stroke-width':2.8,'stroke-linecap':'round','stroke-linejoin':'round'},g);symbol.innerHTML=art(it.type);el('rect',{x:-25,y:-28,width:50,height:56,class:'selection'},g);el('rect',{x:-26,y:-29,width:52,height:58,fill:'transparent',stroke:'none'},g)}const it=selection.size===1?items.find(i=>i.id===selected):null;$('selectionInfo').textContent=selection.size>1?selection.size+' stitches selected (group transforms enabled)':it?(defs.find(d=>d[0]===it.type)?.[1]||'Unknown stitch')+' · Stitch #'+it.id:'No stitch selected';for(const id of ['rotation','size','widthScale','heightScale'])$(id).disabled=!selection.size;if(selection.size>1){$('rotation').value=0;$('size').value=36;$('widthScale').value=100;$('heightScale').value=100}else if(it){$('rotation').value=it.rotation;$('size').value=it.size;$('widthScale').value=Math.round((it.scaleX||1)*100);$('heightScale').value=Math.round((it.scaleY||1)*100);document.querySelectorAll('.swatch').forEach(b=>b.classList.toggle('active',b.dataset.color===it.color))}document.querySelectorAll('.swatch').forEach(b=>{b.disabled=!selection.size;b.classList.toggle('active',selection.size===1&&it&&b.dataset.color===it.color)});$('sizeValue').textContent=it?it.size+' px':selection.size>1?'Multiple':'—';buttons();$('groupBtn').disabled=selection.size<2;$('ungroupBtn').disabled=!items.some(i=>selection.has(i.id)&&i.groupId);drawControls()}
 function updateInfo(){$('infoProject').textContent=$('projectName').value.trim()||'Untitled pattern';$('infoStitches').textContent=items.length;$('infoSelected').textContent=selection.size;$('infoZoom').textContent=Math.round(zoomLevel*100)+'%'}$('projectName').addEventListener('input',updateInfo);function coords(e){const p=canvas.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(canvas.getScreenCTM().inverse())}function snap(n){const s=settings();return s.snap?Math.round(n/s.spacing)*s.spacing:n}function addStitch(type,x,y){checkpoint();const it={id:nextId++,type,x:snap(x),y:snap(y),rotation:0,size:36,scaleX:1,scaleY:1,color:'#233e3a'};items.push(it);expandBoard(it.x,it.y);selection=new Set([it.id]);selected=it.id;showMoveControls();render()}
 canvas.addEventListener('dblclick',e=>{if(e.pointerType==='touch'||suppressTouchClickUntil>performance.now())return;if(handMode||tool==='pointer'||e.target.closest('.stitch'))return;const p=coords(e);addStitch(tool,p.x,p.y)});
  // Base v3.6 geometry and mouse behavior retained; touch gestures are handled separately.
  const marquee=el('rect',{fill:'#76529b','fill-opacity':'.10',stroke:'#76529b','stroke-width':1.5,'stroke-dasharray':'5 4',visibility:'hidden','pointer-events':'none'},canvas);
  const transformControls=el('g',{id:'transformControls'},canvas);
- let nextGroupId=1;let controlsVisible=false,controlMode="move",holdTimer=null,touchGesture=null,lastTouchTap=null,suppressTouchClickUntil=0;
+ let lastInputTouch=false;let nextGroupId=1;let controlsVisible=false,controlMode="move",holdTimer=null,touchGesture=null,lastTouchTap=null,suppressTouchClickUntil=0;
  const touchPointers=new Map();
  function updateMarquee(a,b){marquee.setAttribute('x',Math.min(a.x,b.x));marquee.setAttribute('y',Math.min(a.y,b.y));marquee.setAttribute('width',Math.abs(a.x-b.x));marquee.setAttribute('height',Math.abs(a.y-b.y));marquee.setAttribute('visibility','visible')}
  function hitStitch(p){for(let i=items.length-1;i>=0;i--){const it=items[i],rad=30*it.size/36;const ang=-it.rotation*Math.PI/180,dx=p.x-it.x,dy=p.y-it.y;const xx=dx*Math.cos(ang)-dy*Math.sin(ang),yy=dx*Math.sin(ang)+dy*Math.cos(ang);if(Math.abs(xx)<=rad*(it.scaleX||1)&&Math.abs(yy)<=rad*1.13*(it.scaleY||1))return it}return null}
@@ -130,7 +130,7 @@ canvas.addEventListener('dblclick',e=>{if(e.pointerType==='touch'||suppressTouch
  function ungroupSelected(){if(!items.some(i=>selection.has(i.id)&&i.groupId))return;checkpoint();const groups=new Set(items.filter(i=>selection.has(i.id)&&i.groupId).map(i=>i.groupId));items.filter(i=>groups.has(i.groupId)).forEach(i=>delete i.groupId);render();$('status').textContent='Group unlocked.'}
  $('groupBtn').onclick=groupSelected;$('ungroupBtn').onclick=ungroupSelected;
  function hideControls(){controlsVisible=false;transformControls.replaceChildren()}
- function showMoveControls(){controlMode='move';controlsVisible=selection.size>0;drawControls()}
+ function showMoveControls(){controlMode=lastInputTouch?'move':'transform';controlsVisible=selection.size>0;drawControls()}
  function showTransformControls(){controlMode='transform';controlsVisible=selection.size>0;drawControls()}
  let controlsFrame=0;function scheduleControls(){if(controlsFrame)return;controlsFrame=requestAnimationFrame(()=>{controlsFrame=0;drawControls()})}function drawControls(){transformControls.replaceChildren();if(!controlsVisible)return;const b=bounds();if(!b)return;const k=1/zoomLevel,stem=38*k,transform=controlMode==='transform';
   el('rect',{x:b.x,y:b.y,width:b.w,height:b.h,class:transform?'outline':'outline move-outline'},transformControls);
@@ -140,7 +140,7 @@ canvas.addEventListener('dblclick',e=>{if(e.pointerType==='touch'||suppressTouch
    el('line',{x1:b.cx,y1:b.y,x2:b.cx,y2:b.y-stem,class:'stem'},transformControls);
    el('circle',{cx:b.cx,cy:b.y-stem,r:16*k,class:'round-control','data-control':'rotate'},transformControls);
    const rt=el('text',{x:b.cx,y:b.y-stem+5*k,'text-anchor':'middle','font-size':19*k,fill:'white','pointer-events':'none'},transformControls);rt.textContent='↻';
-  }else{
+  }else if(lastInputTouch){
    el('line',{x1:b.cx,y1:b.y+b.h,x2:b.cx,y2:b.y+b.h+stem,class:'stem move-stem'},transformControls);
    el('circle',{cx:b.cx,cy:b.y+b.h+stem,r:19*k,class:'round-control move-control','data-control':'move'},transformControls);
    const mt=el('text',{x:b.cx,y:b.y+b.h+stem+6*k,'text-anchor':'middle','font-size':20*k,fill:'white','pointer-events':'none'},transformControls);mt.textContent='✥';
@@ -171,7 +171,7 @@ canvas.addEventListener('dblclick',e=>{if(e.pointerType==='touch'||suppressTouch
   const pts=[...touchPointers.values()].slice(0,2),dx=pts[1].x-pts[0].x,dy=pts[1].y-pts[0].y;
   touchGesture={kind:'pinch',distance:Math.max(1,Math.hypot(dx,dy)),initialZoom:zoomLevel,center:{x:(pts[0].x+pts[1].x)/2,y:(pts[0].y+pts[1].y)/2}};
  }
- function pointerDown(e){if(e.button!==0)return;const touch=e.pointerType==='touch';
+ function pointerDown(e){if(e.button!==0)return;const touch=e.pointerType==='touch';lastInputTouch=touch;
   if(touch){e.preventDefault();suppressTouchClickUntil=performance.now()+800;touchPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
    if(touchPointers.size>=2){startPinch();return}
    if(beginControl(e)){try{canvas.setPointerCapture(e.pointerId)}catch(_){}return}
@@ -188,7 +188,7 @@ canvas.addEventListener('dblclick',e=>{if(e.pointerType==='touch'||suppressTouch
   // Original v3.6 mouse selection and dragging.
   e.preventDefault();const p=coords(e),hit=hitStitch(p);
   if(hit){const id=hit.id;if(e.shiftKey)expandGroupSelection(hit,true);else if(!selection.has(id))expandGroupSelection(hit);selected=selection.size===1?[...selection][0]:null;
-   drag={kind:'move',start:p,orig:items.filter(it=>selection.has(it.id)).map(it=>({id:it.id,x:it.x,y:it.y})),saved:false,moved:false};layer.querySelectorAll('.stitch').forEach(node=>node.classList.toggle('selected',selection.has(+node.dataset.id)));
+   showTransformControls();drag={kind:'move',start:p,orig:items.filter(it=>selection.has(it.id)).map(it=>({id:it.id,x:it.x,y:it.y})),saved:false,moved:false};layer.querySelectorAll('.stitch').forEach(node=>node.classList.toggle('selected',selection.has(+node.dataset.id)));
   }else{drag={kind:'box',start:p,end:p,additive:e.shiftKey,previous:new Set(selection)};if(!e.shiftKey){selection.clear();selected=null;layer.querySelectorAll('.stitch').forEach(node=>node.classList.remove('selected'))}}
   try{canvas.setPointerCapture(e.pointerId)}catch(_){}
  }
@@ -236,7 +236,7 @@ canvas.addEventListener('dblclick',e=>{if(e.pointerType==='touch'||suppressTouch
  }
  if(touchGesture?.kind==='control'&&touchGesture.id===e.pointerId){touchGesture=null;render();return}
  if(!drag)return;if(drag.kind==='box'){marquee.setAttribute('visibility','hidden');const a=drag.start,b=drag.end||a,left=Math.min(a.x,b.x),right=Math.max(a.x,b.x),top=Math.min(a.y,b.y),bottom=Math.max(a.y,b.y);if(Math.hypot(a.x-b.x,a.y-b.y)>4){const found=items.filter(it=>{const r=28*it.size/36;return it.x+r>=left&&it.x-r<=right&&it.y+r>=top&&it.y-r<=bottom}).map(it=>it.id);selection=drag.additive?new Set([...drag.previous,...found]):new Set(found)}else if(!drag.additive)selection.clear();selected=selection.size===1?[...selection][0]:null}
- drag=null;render();
+ drag=null;if(selection.size)showTransformControls();render();
  }
  canvas.addEventListener('pointerdown',pointerDown);
  canvas.addEventListener('pointermove',pointerMove);
@@ -244,9 +244,32 @@ canvas.addEventListener('dblclick',e=>{if(e.pointerType==='touch'||suppressTouch
  canvas.addEventListener('pointercancel',finishPointer);
  // Ignore browser-generated context menus on touch: never duplicate or delete on a hold.
  canvas.addEventListener('contextmenu',e=>{e.preventDefault();if(e.pointerType==='touch'||suppressTouchClickUntil>performance.now())return;const hit=hitStitch(coords(e));if(hit){if(!selection.has(hit.id)){selection=new Set([hit.id]);selected=hit.id}remove()}else if(selection.size)remove()});
-for(const id of ['gridToggle','snapToggle','rowToggle','circleToggle','spacing'])$(id).addEventListener('change',()=>{checkpoint();render()});for(const [id,key]of [['rotation','rotation'],['size','size']]){let before=null;$(id).addEventListener('pointerdown',()=>{if(selected!==null)before=state()});$(id).addEventListener('input',e=>{const it=items.find(x=>x.id===selected);if(!it)return;if(before===null)checkpoint();else if(before){history.push(before);future=[];before=''}it[key]=+e.target.value;render()});$(id).addEventListener('change',()=>before=null)}
-for(const [id,key] of [['widthScale','scaleX'],['heightScale','scaleY']]){let active=false;$(id).addEventListener('pointerdown',()=>active=false);$(id).addEventListener('input',e=>{const it=items.find(i=>i.id===selected);if(!it)return;if(!active){checkpoint();active=true}it[key]=+e.target.value/100;render()});$(id).addEventListener('change',()=>active=false)}
-document.querySelectorAll('.swatch').forEach(b=>b.addEventListener('click',()=>{if(!selection.size)return;checkpoint();items.filter(it=>selection.has(it.id)).forEach(it=>it.color=b.dataset.color);render()}));
+for(const id of ['gridToggle','snapToggle','rowToggle','circleToggle','spacing'])$(id).addEventListener('change',()=>{checkpoint();render()});let propertyBaseline=null,propertySaved=false;
+ function groupProperty(id,value){const chosen=items.filter(i=>selection.has(i.id));if(!chosen.length)return;
+  if(!propertyBaseline||propertyBaseline.id!==id){propertyBaseline={id,original:chosen.map(i=>({...i})),b:bounds()};propertySaved=false}
+  if(!propertySaved){checkpoint();propertySaved=true}
+  const b=propertyBaseline.b, angle=(id==='rotation'?value:0)*Math.PI/180;
+  const sx=id==='widthScale'?value/100:id==='size'?value/36:1;
+  const sy=id==='heightScale'?value/100:id==='size'?value/36:1;
+  for(const orig of propertyBaseline.original){const it=items.find(i=>i.id===orig.id);if(!it)continue;
+   const x=(orig.x-b.cx)*sx,y=(orig.y-b.cy)*sy;
+   it.x=b.cx+x*Math.cos(angle)-y*Math.sin(angle);it.y=b.cy+x*Math.sin(angle)+y*Math.cos(angle);
+   it.rotation=id==='rotation'?orig.rotation+value:orig.rotation;
+   it.scaleX=(orig.scaleX||1)*sx;it.scaleY=(orig.scaleY||1)*sy;
+  }
+  render();
+ }
+ for(const [id,key] of [['rotation','rotation'],['size','size'],['widthScale','scaleX'],['heightScale','scaleY']]){
+  const input=$(id);input.addEventListener('pointerdown',()=>{propertyBaseline=null;propertySaved=false});
+  input.addEventListener('input',e=>{const value=+e.target.value;if(!selection.size)return;
+   if(selection.size>1){groupProperty(id,value);return}
+   const it=items.find(x=>x.id===selected);if(!it)return;
+   if(!propertySaved){checkpoint();propertySaved=true}
+   it[key]=id==='widthScale'||id==='heightScale'?value/100:value;render();
+  });
+  input.addEventListener('change',()=>{propertyBaseline=null;propertySaved=false});
+ }
+ document.querySelectorAll('.swatch').forEach(b=>b.addEventListener('click',()=>{if(!selection.size)return;checkpoint();items.filter(it=>selection.has(it.id)).forEach(it=>it.color=b.dataset.color);render()}));
 function remove(){if(!selection.size)return;checkpoint();items=items.filter(i=>!selection.has(i.id));selection.clear();selected=null;render()}
 function copy(){clipboard=items.filter(i=>selection.has(i.id)).map(i=>({...i}));pasteCount=0;buttons();$('status').textContent=clipboard.length+' stitch(es) copied.'}
 function paste(){if(!clipboard.length)return;checkpoint();pasteCount++;const offset=pasteCount*20;const copies=clipboard.map(i=>({...i,id:nextId++,x:i.x+offset,y:i.y+offset}));const groupMap=new Map();copies.forEach(it=>{if(it.groupId){if(!groupMap.has(it.groupId))groupMap.set(it.groupId,nextGroupId++);it.groupId=groupMap.get(it.groupId)}});items.push(...copies);copies.forEach(it=>expandBoard(it.x,it.y));selection=new Set(copies.map(i=>i.id));selected=copies.length===1?copies[0].id:null;render()}
