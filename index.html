@@ -130,7 +130,7 @@ canvas.addEventListener('dblclick',e=>{if(e.pointerType==='touch'||suppressTouch
  function ungroupSelected(){if(!items.some(i=>selection.has(i.id)&&i.groupId))return;checkpoint();const groups=new Set(items.filter(i=>selection.has(i.id)&&i.groupId).map(i=>i.groupId));items.filter(i=>groups.has(i.groupId)).forEach(i=>delete i.groupId);render();$('status').textContent='Group unlocked.'}
  $('groupBtn').onclick=groupSelected;$('ungroupBtn').onclick=ungroupSelected;
  function hideControls(){controlsVisible=false;transformControls.replaceChildren()}
- function showMoveControls(){controlMode=lastInputTouch?'move':'transform';controlsVisible=selection.size>0;drawControls()}
+ function showMoveControls(){controlMode=lastInputTouch?'move':'select';controlsVisible=selection.size>0;drawControls()}
  function showTransformControls(){controlMode='transform';controlsVisible=selection.size>0;drawControls()}
  let controlsFrame=0;function scheduleControls(){if(controlsFrame)return;controlsFrame=requestAnimationFrame(()=>{controlsFrame=0;drawControls()})}function drawControls(){transformControls.replaceChildren();if(!controlsVisible)return;const b=bounds();if(!b)return;const k=1/zoomLevel,stem=38*k,transform=controlMode==='transform';
   el('rect',{x:b.x,y:b.y,width:b.w,height:b.h,class:transform?'outline':'outline move-outline'},transformControls);
@@ -187,8 +187,8 @@ canvas.addEventListener('dblclick',e=>{if(e.pointerType==='touch'||suppressTouch
   if(beginControl(e)){e.preventDefault();try{canvas.setPointerCapture(e.pointerId)}catch(_){}return}
   // Original v3.6 mouse selection and dragging.
   e.preventDefault();const p=coords(e),hit=hitStitch(p);
-  if(hit){const id=hit.id;if(e.shiftKey)expandGroupSelection(hit,true);else if(!selection.has(id))expandGroupSelection(hit);selected=selection.size===1?[...selection][0]:null;
-   if(controlsVisible&&controlMode==='move'&&selection.has(id))showTransformControls();else if(controlsVisible&&controlMode==='transform'&&selection.has(id))showTransformControls();else showMoveControls();drag={kind:'move',start:p,orig:items.filter(it=>selection.has(it.id)).map(it=>({id:it.id,x:it.x,y:it.y})),saved:false,moved:false};layer.querySelectorAll('.stitch').forEach(node=>node.classList.toggle('selected',selection.has(+node.dataset.id)));
+  if(hit){const id=hit.id;const wasSelected=selection.has(id);if(e.shiftKey)expandGroupSelection(hit,true);else if(!selection.has(id))expandGroupSelection(hit);if(!wasSelected)hideControls();selected=selection.size===1?[...selection][0]:null;
+   if(controlsVisible&&controlMode==='select'&&selection.has(id))showTransformControls();else if(controlsVisible&&controlMode==='transform'&&selection.has(id))showTransformControls();else showMoveControls();drag={kind:'move',start:p,orig:items.filter(it=>selection.has(it.id)).map(it=>({id:it.id,x:it.x,y:it.y})),saved:false,moved:false};layer.querySelectorAll('.stitch').forEach(node=>node.classList.toggle('selected',selection.has(+node.dataset.id)));
   }else{drag={kind:'box',start:p,end:p,additive:e.shiftKey,previous:new Set(selection)};if(!e.shiftKey){selection.clear();selected=null;layer.querySelectorAll('.stitch').forEach(node=>node.classList.remove('selected'))}}
   try{canvas.setPointerCapture(e.pointerId)}catch(_){}
  }
